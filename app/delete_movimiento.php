@@ -4,10 +4,10 @@ $con = connection();
 
 $id = $_GET['id'];
 
-$sql = "DELETE FROM users WHERE id='$id'";
+$sql = "DELETE FROM movimientos WHERE id='$id'";
 $query = mysqli_query($con, $sql);
 
 if($query){
-    Header("Location: index.php");
+    Header("Location: ../index.php");
 };
 ?>
