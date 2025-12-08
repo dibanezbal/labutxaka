@@ -24,6 +24,8 @@ if ($categorias_res) {
     }
 }
 
+$fecha_movimiento = date('Y-m-d', strtotime($row['fecha_registro']));
+
 
 ?>
 
@@ -40,7 +42,6 @@ if ($categorias_res) {
     <div>
         <h1>Editar movimiento</h1>
         <form action="edit_movimiento.php" method="POST">
-            <h1>Crear usuario</h1>
             <input type="hidden" name="id" value="<?= $row['id']; ?>">
             <div>
                 <input type="radio" name="tipo_movimiento" value="Gasto"
@@ -48,17 +49,19 @@ if ($categorias_res) {
                 <input type="radio" name="tipo_movimiento" value="Ingreso"
                     <?= $row['tipo_movimiento'] == 'Ingreso' ? 'checked' : ''; ?>>Ingreso
             </div>
-            <input type="date" name="fecha_registro" placeholder="Fecha">
+            <th><?= $row['id']; ?></th>
+            <input type="date" name="fecha_registro" placeholder="Fecha" value="<?= $fecha_movimiento; ?>">
             <input type="radio" name="tipo_registro" value="Fijo">Fijo
             <input type="radio" name="tipo_registro" value="Variable" checked>Variable
             <select name="cuenta" id="cuenta">
                 <?php foreach ($cuentas as $id => $nombre): ?>
-                <option value="<?= $id; ?>"><?= $nombre; ?></option>
+                <option value="<?= $id; ?>" <?= $row['cuenta_id'] == $id ? 'selected' : ''; ?>><?= $nombre; ?></option>
                 <?php endforeach; ?>
             </select>
             <select name="categoria" id="categoria">
                 <?php foreach ($categorias as $id => $nombre): ?>
-                <option value="<?= $id; ?>"><?= $nombre; ?></option>
+                <option value="<?= $id; ?>" <?= $row['categoria_id'] == $id ? 'selected' : ''; ?>><?= $nombre; ?>
+                </option>
                 <?php endforeach; ?>
             </select>
             <input type="number" name="cantidad" value="<?= $row['cantidad']; ?>" placeholder="Cantidad">
@@ -67,7 +70,7 @@ if ($categorias_res) {
             </select>
             <input type="hidden" name="moneda" value="EUR">
             <input type="text" name="comentario" value="<?= $row['comentario']; ?>" placeholder="Comentario">
-            <input type="submit" value="Actualizar usuario">
+            <input type="submit" value="Actualizar movimiento">
         </form>
     </div>
 
