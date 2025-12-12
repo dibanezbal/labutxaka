@@ -1,0 +1,5 @@
+sl-button.btn-disabled::part(base) {
+    cursor: not-allowed;
+    background-color: gray;
+    border: none;
+}

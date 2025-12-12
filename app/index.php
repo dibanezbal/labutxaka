@@ -3,6 +3,7 @@ require_once __DIR__ . "/config/config.php";
 require_once __DIR__ . "/core/routes.php";
 require_once __DIR__ . "/config/database.php";
 
+
 // Determina el controlador a cargar
 if (isset($_GET['c'])) {
     $controller = loadController($_GET['c']);

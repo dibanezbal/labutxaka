@@ -11,27 +11,28 @@ class MovimientosController
         $this->model = new MovimientosModel();
     }
 
-    public function index(){
+	public function index() {
+		$titulo = "Movimientos";
+		$movimientos = $this->model->getAllMovimientos();
+		$cuentas     = $this->model->getCuentas();
+		$categorias  = $this->model->getCategorias();
 
-        $data['titulo'] = "Listado de Movimientos";
-        $movimientos = $this->model->getAllMovimientos();
-		$cuentas = $this->model->getCuentas();
-		$categorias = $this->model->getCategorias();
+		require __DIR__ . '/../views/templates/header.php';
+		require __DIR__ . '/../views/movimientos/movimientos.php';
+		require __DIR__ . '/../views/templates/footer.php';
+	}
 
-        $viewFile = __DIR__ . '/../views/movimientos/movimientos.php';
-        if (file_exists($viewFile)) {
-            extract($data);
-            require $viewFile;
-        } else {
-            echo "Error: Vista no encontrada en " . $viewFile;
-        }
-    }
+	public function listJson() {
+		$movimientos = $this->model->getAllMovimientos();
+		header('Content-Type: application/json');
+    	echo json_encode(['movimientos' => $movimientos], JSON_UNESCAPED_UNICODE);
+	}
 
 	public function create(){
 		
-		$data['titulo'] = "Crear Nuevo Movimiento";
+		$data['titulo'] 	= "Crear Nuevo Movimiento";
 		$data['categorias'] = $this->model->getCategorias(); 
-		$data['cuentas'] = $this->model->getCuentas();     
+		$data['cuentas'] 	= $this->model->getCuentas();     
 		
 		require __DIR__ . '/../views/movimientos/movimientos_create.php';
 	}
@@ -44,15 +45,15 @@ class MovimientosController
 		$data['titulo'] = "Añadir Movimiento";
 
 		$data['categorias'] = $this->model->getCategorias();
-		$data['cuentas'] = $this->model->getCuentas();
+		$data['cuentas'] 	= $this->model->getCuentas();
 		
-		$categoria_id = $_POST['categoria_id'];
-		$cuenta_id = $_POST['cuenta_id'];
-		$tipo_movimiento = $_POST['tipo_movimiento'];
-		$tipo_registro = $_POST['tipo_registro'];
-		$cantidad = $_POST['cantidad'];
-		$fecha = $_POST['fecha_registro'];
-		$comentario = $_POST['comentario'];		
+		$categoria_id 		= $_POST['categoria_id'];
+		$cuenta_id 			= $_POST['cuenta_id'];
+		$tipo_movimiento 	= $_POST['tipo_movimiento'];
+		$tipo_registro 		= $_POST['tipo_registro'];
+		$cantidad 			= $_POST['cantidad'];
+		$fecha 				= $_POST['fecha_registro'];
+		$comentario			= $_POST['comentario'];		
 		
 		$movimientos = new MovimientosModel();
 		
@@ -64,27 +65,15 @@ class MovimientosController
 	}
 	
 
-	public function edit($id)
-	{
-		if (empty($id)) {
-			echo "Error: Se requiere un ID para editar.";
-			exit;
-		}
-
-		$movimiento = $this->model->getMovimientoById($id);
-
-		if ($movimiento) {
-			$categorias = $this->model->getCategorias();
-			$cuentas = $this->model->getCuentas();
-			
-			$titulo = "Editar Movimiento";
-
-			require __DIR__ . '/../views/movimientos/movimientos_edit.php';
-		} else {
-			echo "Error: Movimiento con ID '$id' no encontrado.";
-			exit;
-		}
-	}
+	public function edit() {
+        $id = $_GET['id'] ?? null;
+        if (!$id) { http_response_code(400); echo "Falta id"; return; }
+        $movimiento = $this->model->getMovimientoById($id);
+        if (!$movimiento) { http_response_code(404); echo "No encontrado"; return; }
+        $cuentas = $this->model->getCuentas();
+        $categorias = $this->model->getCategorias();
+        require __DIR__ . '/../views/movimientos/movimientos_edit.php';
+    }
 
 	public function update()
 	{
@@ -92,14 +81,14 @@ class MovimientosController
         	header('Location: index.php?c=movimientos&a=index'); exit;
     	}
 
-		$id = $_POST['id']; 
-		$categoria_id = $_POST['categoria_id'];
-		$cuenta_id = $_POST['cuenta_id'];
-		$tipo_movimiento = $_POST['tipo_movimiento'];
-		$tipo_registro = $_POST['tipo_registro'];  
-		$cantidad = $_POST['cantidad'];
-		$fecha = $_POST['fecha_registro'];
-		$comentario = $_POST['comentario'];
+		$id 			  = $_POST['id']; 
+		$categoria_id 	  = $_POST['categoria_id'];
+		$cuenta_id 		  = $_POST['cuenta_id'];
+		$tipo_movimiento  = $_POST['tipo_movimiento'];
+		$tipo_registro 	  = $_POST['tipo_registro'];  
+		$cantidad 		  = $_POST['cantidad'];
+		$fecha 			  = $_POST['fecha_registro'];
+		$comentario 	  = $_POST['comentario'];
 		
 		$this->model->editMovimiento($id, $categoria_id, $cuenta_id, $tipo_registro, $tipo_movimiento, $cantidad, $fecha, $comentario);
 		

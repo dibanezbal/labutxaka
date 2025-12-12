@@ -1,50 +1,26 @@
-<?php
-// Variables esperadas: $movimientos, $cuentas, $categorias
-?>
-<!doctype html>
-<html>
+<script type="module" src="app/assets/js/components/card-list.js"></script>
+<script type="module" src="app/assets/js/components/modal.js"></script>
 
-<head>
-    <meta charset="utf-8">
-    <title>Movimientos</title>
-</head>
+<div class="movimientos-container">
 
-<body>
-    <h1>Movimientos</h1>
-    <button><a href="?c=movimientos&a=create">Crear Movimiento</a></button>
-    <table>
-        <thead>
-            <tr>
-                <th>Fecha</th>
-                <th>Tipo Registro</th>
-                <th>Tipo Movimiento</th>
-                <th>Cuenta</th>
-                <th>Categoría</th>
-                <th>Cantidad</th>
-                <th>Comentario</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($movimientos as $m): ?>
-            <tr>
-                <td><?= htmlspecialchars(isset($m['fecha_registro']) ? date('Y-m-d', strtotime($m['fecha_registro'])) : '') ?>
-                </td>
-                <td><?= htmlspecialchars($m['tipo_registro'] ?? '') ?></td>
-                <td><?= htmlspecialchars($m['tipo_movimiento'] ?? '') ?></td>
-                <td><?= htmlspecialchars($cuentas[$m['cuenta_id']] ?? '') ?></td>
-                <td><?= htmlspecialchars($categorias[$m['categoria_id']] ?? '') ?></td>
-                <td><?= htmlspecialchars($m['cantidad'] ?? '') ?></td>
-                <td><?= htmlspecialchars($m['comentario'] ?? '') ?></td>
-                <td>
-                    <a href="?c=movimientos&a=edit&id=<?= $m['id']; ?>">Editar</a>
-                    |
-                    <a href="?c=movimientos&a=delete&id=<?= $m['id']; ?>">Eliminar</a>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-</body>
+    <sl-button id="btn-open-edit-form" class="btn btn-open-modal" data-id="" variant="primary">Editar
+    </sl-button>
 
-</html>
+    <sl-button id="btn-open-delete-modal" class="btn btn-open-modal" data-id="" variant="primary">Eliminar
+    </sl-button>
+
+    <sl-dialog id="edit-dialog" label="Editar Movimiento" style="--width: 640px;">
+        <div id="edit-dialog-content"></div>
+        <sl-button slot="footer" variant="neutral" id="edit-cancel">Cerrar</sl-button>
+    </sl-dialog>
+
+    <sl-dialog id="delete-dialog" label="Eliminar Movimiento" style="--width: 640px;">
+        <div id="delete-dialog-content"></div>
+        <sl-button slot="footer" variant="neutral" id="delete-cancel">Cancelar</sl-button>
+        <sl-button slot="footer" variant="primary" id="delete-accept">Aceptar</sl-button>
+    </sl-dialog>
+
+    <card-list movimientos='<?= json_encode($movimientos) ?>' cuentas='<?= json_encode($cuentas) ?>'
+        categorias='<?= json_encode($categorias) ?>'>
+    </card-list>
+</div>

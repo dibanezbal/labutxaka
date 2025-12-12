@@ -1,0 +1,72 @@
+/* 
+  Modern CSS Reset
+  A practical baseline for better web development
+*/
+
+@import url('./components/cards.css');
+@import url('./components/buttons.css');
+@import url('./components/alerts.css');
+
+
+/* 1. More intuitive box-sizing model */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* 3. Enable keyword animations */
+html {
+  interpolate-size: allow-keywords;
+}
+
+body {
+  /* 4. Add accessible line-height */
+  line-height: 1.5;
+  /* 5. Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 6. Improve media defaults */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 7. Inherit fonts for form controls */
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* 8. Avoid text overflows */
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/* 9. Improve line wrapping */
+p {
+  text-wrap: pretty;
+}
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+/* 10. Create a root stacking context */
+#root, #__next {
+  isolation: isolate;
+}
+
+main.layout-content {
+  padding: 20px;
+}
+
+.layout { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
+.sidebar { background: #fff; padding: 16px; }
+.content { padding: 16px; }
+.sidebar a { display:block; padding:8px 10px; border-radius:6px; color:#111; text-decoration:none; }
+.sidebar a:hover { background:#f3f4f6; }
+.movimientos-container { max-width: 100%; margin: 20px auto; }
