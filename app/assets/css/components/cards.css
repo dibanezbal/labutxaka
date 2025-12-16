@@ -8,3 +8,108 @@ button.card-basic {
     background: none;
     padding: 15px;
 }
+
+
+span.font-gasto {
+  color: var(--color-red);
+  font-weight: var(--font-weight-bold);
+}
+
+span.font-ingreso {
+  color: var(--color-primary-2);
+  font-weight: var(--font-weight-bold);
+}
+
+
+.mov-card {
+  border-radius: var(--sl-border-radius-large);
+  background: var(--color-white);
+  color: var(--color-primary-2)
+}
+
+.mov-card:hover {
+  box-shadow: var(--sl-shadow-large);
+  background-color: var(--color-secondary-1);
+}
+
+.mov-card__body {
+  padding: var(--sl-spacing-small);
+  font-size: var(--font-size-sm);
+}
+
+.mov-card__row {
+  display: grid;
+  grid-template-columns:
+    20px         /* checkbox */
+    100px        /* fecha */
+    160px          /* categoría */
+    1fr          /* comentario */
+    200px        /* cuenta */
+    60px        /* tipo registro */
+    90px;       /* cantidad */
+  align-items: center;
+  gap: 14px;
+}
+
+/* Columna fija: evita que la cantidad salte */
+.mov-card__amount {
+  justify-self: end;
+  font-weight: 600;
+}
+.font-gasto  { color: #c0392b; }
+.font-ingreso{ color: #1e7e34; }
+
+.mov-card__comment,
+.mov-card__category,
+.mov-card__account {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.mov-card__category,
+.mov-card__account {
+  font-weight: var(--font-weight-bold);
+}
+
+/* Accesibilidad y click */
+.mov-card--clickable { cursor: pointer; }
+
+.card-list__grid {
+    display: grid;
+    gap: 8px;
+}
+
+.mov-card__content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 150px;
+    text-align: left;
+}
+
+.mov-card__content>span {
+    display: block;
+    width: 250px;
+}
+
+.mov-card__details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.mov-card__account {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.mov-card__account sl-icon {
+  margin-right: 6px;
+}
+
+.mov-card--selected {
+  background-color: var(--color-secondary);
+  color: var(--color-primary-2);
+}

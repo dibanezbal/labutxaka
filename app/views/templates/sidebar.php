@@ -1,9 +1,28 @@
+<?php
+$currentController = strtolower($_GET['c'] ?? 'resumen');
+$currentAction = strtolower($_GET['a'] ?? 'index');
+
+$activePage = fn(string $controller, string $action = 'index') => 
+    $currentController === strtolower($controller) && 
+    $currentAction === strtolower($action) ? 'sidebar-active' : '';
+?>
+
 <div class="sidebar">
-    <div class="sidebar-title">Labutxaka</div>
+    <a class="sidebar-title" href="index.php"><img src="app/assets/img/logo_amarillo_vertical.svg" alt=""></a>
     <nav class="sidebar-nav">
-        <a class="sidebar-link" href="?c=movimientos&a=index">Resumen</a>
-        <a class="sidebar-link" href="?c=movimientos&a=index">Movimientos</a>
-        <a class="sidebar-link" href="?c=movimientos&a=index">Cuentas</a>
-        <a class="sidebar-link" href="?c=movimientos&a=index">Categorías</a>
+        <a class="sidebar-link <?= $activePage('resumen', 'index') ?>" href="index.php">
+            <sl-icon name="list-check"></sl-icon>
+            Resumen
+        </a>
+        <a class="sidebar-link <?= $activePage('movimientos', 'index') ?>" href="?c=movimientos&a=index">
+            <sl-icon name="cash-coin"></sl-icon>
+            Movimientos
+        </a>
+        <a class="sidebar-link <?= $activePage('movimientos', 'cuentas') ?>" href="?c=movimientos&a=cuentas">
+            <sl-icon name="wallet2"></sl-icon> Cuentas
+        </a>
+        <a class="sidebar-link <?= $activePage('movimientos', 'categorias') ?>" href="?c=movimientos&a=categorias">
+            <sl-icon name="list-stars"></sl-icon> Categorías
+        </a>
     </nav>
 </div>

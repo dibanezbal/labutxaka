@@ -1,41 +1,91 @@
 <?php
-// Variables esperadas: $movimiento
 $fecha_movimiento = date('Y-m-d', strtotime($movimiento['fecha_registro']));
-
-
 ?>
-<form id="edit-movimiento-form" action="?c=movimientos&a=update" method="POST">
-    <input type="hidden" name="id" value="<?= $movimiento['id']; ?>">
-    <div>
-        <input type="radio" name="tipo_movimiento" value="Gasto"
-            <?= $movimiento['tipo_movimiento'] === 'Gasto' ? 'checked' : ''; ?>>Gasto
-        <input type="radio" name="tipo_movimiento" value="Ingreso"
-            <?= $movimiento['tipo_movimiento'] === 'Ingreso' ? 'checked' : ''; ?>>Ingreso
-    </div>
-    <input type="date" name="fecha_registro" placeholder="Fecha" value="<?= $fecha_movimiento; ?>">
-    <input type="radio" name="tipo_registro" value="Fijo"
-        <?= $movimiento['tipo_registro'] === 'Fijo' ? 'checked' : ''; ?>>Fijo
-    <input type="radio" name="tipo_registro" value="Variable"
-        <?= $movimiento['tipo_registro'] === 'Variable' ? 'checked' : ''; ?>>Variable
-    <select name="cuenta_id" id="cuenta">
-        <?php foreach ($cuentas as $id => $nombre): ?>
-        <option value="<?= $id; ?>" <?= $movimiento['cuenta_id'] == $id ? 'selected' : ''; ?>><?= $nombre; ?>
-        </option>
-        <?php endforeach; ?>
-    </select>
-    <select name="categoria_id" id="categoria">
-        <?php foreach ($categorias as $id => $nombre): ?>
-        <option value="<?= $id; ?>" <?= $movimiento['categoria_id'] == $id ? 'selected' : ''; ?>><?= $nombre; ?>
-        </option>
-        <?php endforeach; ?>
-    </select>
-    <input type="number" name="cantidad" value="<?= $movimiento['cantidad']; ?>" placeholder="Cantidad">
-    <select name="moneda">
-        <option value="EUR">EUR</option>
-    </select>
-    <input type="hidden" name="moneda" value="EUR">
-    <input type="text" name="comentario" value="<?= $movimiento['comentario']; ?>" placeholder="Comentario">
 
-    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-    <a href="index.php" class="btn btn-secondary">Cancelar</a>
+
+<form id="edit-movimiento" action="?c=movimientos&a=update" method="POST">
+    <input type="hidden" name="id" value="<?= $movimiento['id']; ?>">
+
+    <?php 
+    $tipo_movimiento_checked = '';
+    $tipo_registro_checked = '';
+
+    if ($movimiento['tipo_movimiento'] === 'Gasto') {
+        $tipo_movimiento_checked = 'Gasto';
+    } elseif ($movimiento['tipo_movimiento'] === 'Ingreso') {
+        $tipo_movimiento_checked = 'Ingreso';
+    }
+
+    if ($movimiento['tipo_registro'] === 'Fijo') {
+        $tipo_registro_checked = 'Fijo';
+    } elseif ($movimiento['tipo_registro'] === 'Variable') {
+        $tipo_registro_checked = 'Variable';
+    }
+    ?>
+
+    <sl-radio-group class="radio-tabs" label="" name="tipo_movimiento" value="<?= $tipo_movimiento_checked; ?>"
+        required>
+        <sl-radio-button value="Gasto">Gasto
+        </sl-radio-button>
+        <sl-radio-button value="Ingreso">Ingreso
+        </sl-radio-button>
+        <sl-radio-button value="Transferencia" disabled>Transferencia</sl-radio-button>
+    </sl-radio-group>
+
+    <div class="form__fields">
+        <sl-input type="date" label="Fecha" name="fecha_registro" value="<?= $fecha_movimiento; ?>" required></sl-input>
+
+        <sl-radio-group class="radio__tipo" label="Tipo" name="tipo_registro" value="<?= $tipo_registro_checked; ?>"
+            required>
+            <sl-radio value="Fijo">Fijo</sl-radio>
+            <sl-radio value="Variable">Variable</sl-radio>
+        </sl-radio-group>
+
+
+        <sl-select name="cuenta_id" id="cuenta" placeholder="Elige una cuenta" label="Cuenta"
+            value="<?= $movimiento['cuenta_id']; ?>" required>
+            <?php $icon_cuenta = ''; ?>
+            <?php foreach ($cuentas as $id => $nombre): ?>
+            <?php
+              if ($nombre === 'Efectivo') {
+                $icon_cuenta = 'coin';
+              } elseif ($nombre === 'Ahorro') {
+                $icon_cuenta = 'piggy-bank';
+              } else {
+                $icon_cuenta = 'credit-card-2-back';
+              }
+            ?>
+            <sl-option value="<?= $id; ?>" data-icon="<?= $icon_cuenta ?>">
+                <sl-icon name="<?= $icon_cuenta ?>"></sl-icon>
+                <?= htmlspecialchars($nombre) ?>
+            </sl-option>
+            <?php endforeach; ?>
+        </sl-select>
+
+        <sl-select name="categoria_id" id="categoria" placeholder="Elige una categoría" label="Categoría"
+            value="<?= $movimiento['categoria_id']; ?>" required>
+            <?php foreach ($categorias as $id => $nombre): ?>
+            <sl-option value="<?= $id; ?>"><?= $nombre; ?></sl-option>
+            <?php endforeach; ?>
+        </sl-select>
+    </div>
+
+    <div class="form__fields form__fields--cantidad">
+        <sl-input type="number" name="cantidad" label="Cantidad" placeholder="Escribe una cantidad" inputmode="decimal"
+            min="0.01" step="0.01" required pattern="^\d+(?:[.,]\d{1,2})?$" value="<?= $movimiento['cantidad']; ?>">
+        </sl-input>
+
+        <sl-select name="moneda" disabled placeholder="EUR" label="Moneda">
+            <sl-option value="EUR" selected>EUR</sl-option>
+        </sl-select>
+    </div>
+
+    <sl-input type="text" name="comentario" label="Comentario" maxlength="120"
+        value="<?= htmlspecialchars($movimiento['comentario']); ?>"></sl-input>
+
+    <div class="form__buttons">
+        <sl-button class="form__button--cancel" variant="secondary" onclick="window.location.href='index.php'"
+            size="medium" pill>Cancelar</sl-button>
+        <sl-button class="form__button--submit" type="submit" variant="primary" size="medium" pill>Guardar</sl-button>
+    </div>
 </form>

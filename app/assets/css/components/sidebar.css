@@ -1,0 +1,41 @@
+.sidebar { 
+    background: var(--color-primary); 
+    height: 100%;
+}
+
+.sidebar a { 
+    display: flex; 
+    flex-direction: row;
+    align-items: center;
+    padding:8px 10px 8px 40px; 
+    color: var(--color-primary-1);
+    text-decoration:none;
+    font-size: var(--font-size-md);
+}
+
+.sidebar .sidebar-title {
+    display: flex;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+}
+
+.sidebar a.sidebar-title:hover {
+    background-color: var(--color-primary);
+}
+
+.sidebar a:hover { 
+    background: var(--color-secondary-1); 
+    color: var(--color-primary);
+}
+
+.sidebar a.sidebar-active {
+    background: var(--color-secondary); 
+    color: var(--color-primary-2);
+    font-weight: var(--font-weight-bold);
+}
+
+.sidebar a sl-icon {
+    margin-right: 12px;
+    font-size: var(--font-size-lg);
+}

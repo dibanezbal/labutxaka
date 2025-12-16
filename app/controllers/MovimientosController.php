@@ -13,24 +13,28 @@ class MovimientosController
 
 	public function index() {
 		$titulo = "Movimientos";
-		$movimientos = $this->model->getAllMovimientos();
-		$cuentas     = $this->model->getCuentas();
-		$categorias  = $this->model->getCategorias();
+		$movimientos 		= $this->model->getAllMovimientos();
+		$cuentas     		= $this->model->getCuentas();
+		$categorias  		= $this->model->getCategorias();
 
 		require __DIR__ . '/../views/templates/header.php';
 		require __DIR__ . '/../views/movimientos/movimientos.php';
 		require __DIR__ . '/../views/templates/footer.php';
 	}
 
-	public function listJson() {
-		$movimientos = $this->model->getAllMovimientos();
-		header('Content-Type: application/json');
-    	echo json_encode(['movimientos' => $movimientos], JSON_UNESCAPED_UNICODE);
+	public function listaMovimientos() {
+		$sort = $_GET['sort'] ?? 'date_desc';
+
+  		$movimientos = $this->model->getAllMovimientos();
+  		$cuentas = $this->model->getCuentas();
+  		$categorias = $this->model->getCategorias();
+  		
+		require __DIR__ . '/../views/movimientos/_grid.php';
 	}
 
 	public function create(){
 		
-		$data['titulo'] 	= "Crear Nuevo Movimiento";
+		$data['titulo'] 	= "Añadir registro";
 		$data['categorias'] = $this->model->getCategorias(); 
 		$data['cuentas'] 	= $this->model->getCuentas();     
 		
@@ -47,13 +51,19 @@ class MovimientosController
 		$data['categorias'] = $this->model->getCategorias();
 		$data['cuentas'] 	= $this->model->getCuentas();
 		
-		$categoria_id 		= $_POST['categoria_id'];
-		$cuenta_id 			= $_POST['cuenta_id'];
-		$tipo_movimiento 	= $_POST['tipo_movimiento'];
-		$tipo_registro 		= $_POST['tipo_registro'];
-		$cantidad 			= $_POST['cantidad'];
-		$fecha 				= $_POST['fecha_registro'];
-		$comentario			= $_POST['comentario'];		
+		$categoria_id 		= $_POST['categoria_id'] ?? '';
+		$cuenta_id 			= $_POST['cuenta_id'] ?? '';
+		$tipo_movimiento 	= $_POST['tipo_movimiento'] ?? '';
+		$tipo_registro 		= $_POST['tipo_registro'] ?? '';
+		$cantidad 			= $_POST['cantidad'] ?? '';
+		$fecha 				= $_POST['fecha_registro'] ?? '';
+		$comentario			= $_POST['comentario'] ?? '';
+		
+		if (!$categoria_id || !$cuenta_id || !$tipo_movimiento || !$tipo_registro || !$cantidad || !$fecha) {
+			$data['error'] = "Por favor, completa todos los campos obligatorios.";
+			require __DIR__ . '/../views/movimientos/movimientos_create.php';
+			return;
+		}
 		
 		$movimientos = new MovimientosModel();
 		
@@ -81,14 +91,14 @@ class MovimientosController
         	header('Location: index.php?c=movimientos&a=index'); exit;
     	}
 
-		$id 			  = $_POST['id']; 
-		$categoria_id 	  = $_POST['categoria_id'];
-		$cuenta_id 		  = $_POST['cuenta_id'];
-		$tipo_movimiento  = $_POST['tipo_movimiento'];
-		$tipo_registro 	  = $_POST['tipo_registro'];  
-		$cantidad 		  = $_POST['cantidad'];
-		$fecha 			  = $_POST['fecha_registro'];
-		$comentario 	  = $_POST['comentario'];
+		$id 			  	= $_POST['id']; 
+		$categoria_id 	  	= $_POST['categoria_id'];
+		$cuenta_id 		  	= $_POST['cuenta_id'];
+		$tipo_movimiento  	= $_POST['tipo_movimiento'];
+		$tipo_registro 	  	= $_POST['tipo_registro'];  
+		$cantidad 		  	= $_POST['cantidad'];
+		$fecha 			  	= $_POST['fecha_registro'];
+		$comentario 	  	= $_POST['comentario'];
 		
 		$this->model->editMovimiento($id, $categoria_id, $cuenta_id, $tipo_registro, $tipo_movimiento, $cantidad, $fecha, $comentario);
 		
@@ -96,13 +106,34 @@ class MovimientosController
 		exit;
 	}
 	
-	public function delete($id){
-		
-		$movimientos = new MovimientosModel();
-		$movimientos->deleteMovimiento($id);
-		$data["titulo"] = "Movimientos";
-		$this->index();
-	}	
+	public function delete() {
+        $ids = filter_input(INPUT_POST, 'ids', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY) ?: [];
+        if (!$ids && isset($_GET['id'])) $ids = [$_GET['id']];
 
+        $ids = array_values(array_filter($ids, fn($v) => ctype_digit((string)$v)));
+        if (!$ids) { http_response_code(400); echo 'Sin ids'; return; }
+
+        $ok = $this->model->delete($ids);
+        echo $ok ? 'ok' : 'error';
+    }
+
+	// Métodos para obtener cuentas y categorías
+	public function cuentas() {
+		$data['titulo'] 	= "Cuentas";
+		$data['cuentas'] 	= $this->model->getCuentas();
+
+		require __DIR__ . '/../views/templates/header.php';
+		require __DIR__ . '/../views/cuentas.php';
+		require __DIR__ . '/../views/templates/footer.php';
+	}
+
+	public function categorias() {
+		$data['titulo'] 	 = "Categorías";
+		$data['categorias'] = $this->model->getCategorias();
+
+		require __DIR__ . '/../views/templates/header.php';
+		require __DIR__ . '/../views/categorias.php';
+		require __DIR__ . '/../views/templates/footer.php';
+	}
 }
 ?>

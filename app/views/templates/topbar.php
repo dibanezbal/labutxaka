@@ -1,12 +1,13 @@
 <div class="topbar">
     <div class="topbar-user">
-        <sl-button id="btn-open-create-form" class="btn btn-open-modal" variant="primary">Nuevo movimiento</sl-button>
-        <sl-dialog id="create-dialog" label="Crear Nuevo Movimiento">
+        <sl-button id="btn-open-create-form" class="btn btn-open-modal primary-button" size="medium" variant="primary"
+            pill>
+            <sl-icon name="plus-lg"></sl-icon>
+            Registro
+        </sl-button>
+        <sl-dialog class="create-new-registro" id="create-dialog" label="Añadir registro">
             <div id="create-dialog-content"></div>
-            <sl-button slot="footer" variant="primary" id="create-cancel">Cerrar</sl-button>
         </sl-dialog>
-        <sl-avatar label="User avatar">
-        </sl-avatar>
         <sl-dropdown>
             <sl-button slot="trigger" circle>
                 <sl-icon name="person-circle"></sl-icon>

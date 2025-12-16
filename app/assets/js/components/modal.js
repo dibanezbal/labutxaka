@@ -1,131 +1,143 @@
-const createDialog = document.getElementById('create-dialog');
-const createContent = document.getElementById('create-dialog-content');
+const cardList = document.querySelector('card-list');
 
 const editBtn = document.getElementById('btn-open-edit-form');
+const deleteBtn = document.getElementById('btn-open-delete-modal');
+
 const editDialog = document.getElementById('edit-dialog');
 const editContent = document.getElementById('edit-dialog-content');
 
-const deleteBtn = document.getElementById('btn-open-delete-modal');
+const createDialog = document.getElementById('create-dialog');
+const createContent = document.getElementById('create-dialog-content');
+
 const deleteDialog = document.getElementById('delete-dialog');
 const deleteContent = document.getElementById('delete-dialog-content');
 
-function getCheckedItem() {
-  const checkedItem = document.querySelector('.select-movimiento:checked');
-  return checkedItem?.dataset.id || null;
-}
-
 function toggleBtn(btn, enabled) {
-  if (!btn) return;
-  if (enabled) {
-    btn.classList.remove('btn-disabled');
-  } else {
-    btn.classList.add('btn-disabled');
-  }
+  btn?.classList.toggle('btn-disabled', !enabled);
 }
 
-// Estado inicial de los botones
-toggleBtn(editBtn, !!getCheckedItem())
-toggleBtn(deleteBtn, !!getCheckedItem())
+// Estado inicial
+toggleBtn(editBtn, (cardList?.getSelectedIds()?.length || 0) === 1);
+toggleBtn(deleteBtn, (cardList?.getSelectedIds()?.length || 0) >= 1);
 
-// Listener para caambios de slección
+// Sincroniza botones con la selección
+cardList?.addEventListener('selection-change', (e) => {
+  const ids = e.detail.ids || [];
+  toggleBtn(editBtn, ids.length === 1);
+  toggleBtn(deleteBtn, ids.length >= 1);
 
-document.querySelectorAll('.select-movimiento').forEach(checkbox => {
-  checkbox.addEventListener('change', () => {
-    const id = getCheckedItem();
-    toggleBtn(editBtn, !!id);
-    toggleBtn(deleteBtn, !!id);
+  // Resalta las tarjetas seleccionadas
+  cardList.querySelectorAll('.mov-card--selected').forEach(card => card.classList.remove('mov-card--selected'));
+  ids.forEach(id => {
+    const card = cardList.querySelector(`.mov-card[data-id="${id}"]`);
+    if (card) card.classList.add('mov-card--selected');
   });
 });
 
-// Abrir modal para CREATE
+// CREATE
 document.getElementById('btn-open-create-form')?.addEventListener('click', async () => {
-  const res = await fetch('?c=movimientos&a=create', {
-    headers: { 'X-Requested-With': 'XMLHttpRequest' }
-  });
+  const res = await fetch('?c=movimientos&a=create', { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
   createContent.innerHTML = await res.text();
-
   const form = createContent.querySelector('form');
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const fd = new FormData(form);
-    const resp = await fetch('?c=movimientos&a=save', {
-      method: 'POST',
-      body: fd,
-      headers: { 'X-Requested-With': 'XMLHttpRequest' }
-    });
-    if (!resp.ok) { alert('Error al guardar'); return; }
+    const formDataCreate = new FormData(form);
+    const resp = await fetch('?c=movimientos&a=save', { method: 'POST', body: formDataCreate, headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+    if (!resp.ok) { 
+      alert('Error al guardar'
+        
+      ); return; }
     createDialog.hide();
-    window.location.href = '?c=movimientos&a=index&ts=' + Date.now();
+    location.href = '?c=movimientos&a=index&ts=' + Date.now();
   }, { once: true });
-
   createDialog.show();
 });
-
 document.getElementById('create-cancel')?.addEventListener('click', () => createDialog.hide());
 
-// Abrir EDIT (usa data-id del botón)
-document.getElementById('btn-open-edit-form')?.addEventListener('click', async () => {
-  // buscar el checkbox marcado dentro del grid
-  const checked = document.querySelector('.select-movimiento:checked');
-  const id = checked?.dataset.id;
+// EDIT (requiere sólo un item seleccionado)
+editBtn?.addEventListener('click', async (e) => {
+  if (editBtn.classList.contains('btn-disabled')) { e.preventDefault(); return; }
+  const ids = cardList?.getSelectedIds() || [];
+  if (ids.length !== 1) return;
+  const id = ids[0];
 
-  const url = `?c=movimientos&a=edit&id=${(id)}`;
-  const res = await fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+  const res = await fetch(`?c=movimientos&a=edit&id=${encodeURIComponent(id)}`, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
   editContent.innerHTML = await res.text();
-
   const form = editContent.querySelector('form');
-  form?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const fd = new FormData(form);
-    const resp = await fetch('?c=movimientos&a=update', {
-      method: 'POST',
-      body: fd,
-      headers: { 'X-Requested-With': 'XMLHttpRequest' }
-    });
+  form?.addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    const formDataEdit = new FormData(form);
+    const resp = await fetch('?c=movimientos&a=update', { method: 'POST', body: formDataEdit, headers: { 'X-Requested-With': 'XMLHttpRequest' } });
     if (!resp.ok) { alert('Error al actualizar'); return; }
     editDialog.hide();
-    window.location.href = '?c=movimientos&a=index&ts=' + Date.now();
-  });
-
+    location.href = '?c=movimientos&a=index&ts=' + Date.now();
+  }, { once: true });
   editDialog.show();
 });
-
 document.getElementById('edit-cancel')?.addEventListener('click', () => editDialog.hide());
 
-// Eliminar (no ejecutar si está deshabilitado)
-deleteBtn?.addEventListener('click', async (e) => {
-  if (deleteBtn.classList.contains('btn-disabled')) { e.preventDefault(); return; }
-  const id = getCheckedItem();
-  if (!id) return;
+// DELETE (múltiples items seleccionados)
+deleteBtn?.addEventListener('click', () => {
+  if (deleteBtn.classList.contains('btn-disabled')) return;
+  const ids = cardList?.getSelectedIds() || [];
+  if (!ids.length) return;
 
-  deleteContent.textContent = `¿Deseas eliminar todos los 
-registros seleccionados?`;
+  deleteContent.textContent = `¿Deseas eliminar ${ids.length} registro(s) seleccionado(s)?`;
+  deleteDialog.dataset.ids = JSON.stringify(ids);
   deleteDialog.show();
-  
-  deleteDialog.dataset.id = id;
 });
+
+
+// DELETE ALL
+const allSelectedIds = [];
+const selectAll = document.getElementById('select-all');
+selectAll?.addEventListener('change', (e) => {
+
+  e.preventDefault();
+
+  if (!cardList) return;
+
+  allSelectedIds.length = 0;
+
+  const allCheckboxes = document.querySelectorAll('.select-movimiento');
+  allCheckboxes.forEach(cb => { 
+    cb.checked = e.target.checked; 
+    if (e.target.checked) {
+      allSelectedIds.push(cb.dataset.id);
+    }
+  });
+  cardList?.dispatchEvent(new CustomEvent('selection-change', { detail: { ids: allSelectedIds } }));
+
+});
+
+// Cancelar Detele
 
 document.getElementById('delete-cancel')?.addEventListener('click', () => {
   deleteDialog.hide();
-  deleteDialog.dataset.id = '';
+  deleteDialog.dataset.ids = '';
+
+  const selectedCheckboxes = document.querySelectorAll('.select-movimiento:checked');
+  selectedCheckboxes.forEach(cb => { cb.checked = false; });
 });
 
-// Aceptar: elimina y recarga
-document.getElementById('delete-accept')?.addEventListener('click', async () => {
-  const id = deleteDialog.dataset.id;
-  if (!id) { deleteDialog.hide(); return; }
+// Aceptar Delete
 
-  const resp = await fetch(`?c=movimientos&a=delete&id=${encodeURIComponent(id)}`, {
-    method: 'GET',
+document.getElementById('delete-accept')?.addEventListener('click', async () => {
+  const ids = JSON.parse(deleteDialog.dataset.ids || '[]');
+  if (!ids.length) { deleteDialog.hide(); return; }
+
+  // Enviar como FormData: ids[]=
+  const formDataDelete = new FormData();
+  ids.forEach(id => formDataDelete.append('ids[]', id));
+
+  const resp = await fetch('?c=movimientos&a=delete', {
+    method: 'POST',
+    body: formDataDelete,
     headers: { 'X-Requested-With': 'XMLHttpRequest' }
   });
-  if (!resp.ok) { alert('Error al eliminar'); return; }
+  const text = await resp.text();
+  if (!resp.ok) { console.error('Delete error:', resp.status, text); alert('Error al eliminar'); return; }
 
-  // Feedback rápido y cierre
-  deleteContent.textContent = 'Eliminado';
-  setTimeout(() => {
-    deleteDialog.hide();
-    // Recargar lista
-    window.location.href = '?c=movimientos&a=index&ts=' + Date.now();
-  }, 500);
+  deleteDialog.hide();
+  location.href = '?c=movimientos&a=index&ts=' + Date.now();
 });

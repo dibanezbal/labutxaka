@@ -1,5 +1,28 @@
-sl-button.btn-disabled::part(base) {
-    cursor: not-allowed;
-    background-color: gray;
+sl-button.btn-edit::part(base){
+    background-color: var(--color-primary);
+    color: var(--color-primary-1);
     border: none;
 }
+
+sl-button.btn-delete::part(base){
+    background-color: var(--color-red);
+    color: var(--color-primary-1);
+    border: none;
+}
+
+
+sl-button.btn.btn-disabled::part(base) {
+    cursor: not-allowed;
+    background-color: var(--color-gray-1);
+    color: var(--color-gray);
+    border: none;
+}
+
+sl-button.primary-button::part(base) {
+    background-color: var(--color-secondary);
+    color: var(--color-primary-2);
+    font-weight: var(--font-weight-bold);
+    padding: 0 15px;
+    border: none;
+}
+

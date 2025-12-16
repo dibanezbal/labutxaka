@@ -1,0 +1,171 @@
+form sl-button.form__button--submit::part(base) {
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
+    border: 1px solid var(--color-black);
+}
+
+form sl-button.form__button--submit::part(base):hover,
+form sl-button.form__button--cancel::part(base):hover {
+    background-color: var(--color-primary-1);
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary-1);
+}
+
+form sl-button.form__button--submit::part(base):disabled {
+    background-color: gray;
+    cursor: not-allowed;
+}
+
+form sl-button.form__button--cancel::part(base) {
+    background-color: var(--color-primary-1);
+    color: var(--color-primary-2);
+    border: 1px solid var(--color-primary);
+}
+
+form sl-button.form__button--submit::part(base),
+form sl-button.form__button--cancel::part(base) {
+    width: 200px;
+    padding: 0 20px;
+    transition: background-color 0.3s, color 0.3s, border 0.3s;
+}
+
+div.form__buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 35px;
+    margin-bottom: 10px;
+}
+
+
+.form__fields {
+    display: grid;
+    gap: 15px;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+.form__fields--cantidad {
+    grid-template-columns: 3fr 1fr;
+}
+
+form sl-input::part(label),
+form sl-select::part(label) {
+    font-size: var(--font-size-xs);
+    font-family: var(--font-family-base);
+}
+
+.movimientos-controls sl-dialog#create-dialog::part(base) {
+    background-color: var(--color-primary-1);
+}
+
+sl-input::part(base),
+sl-select::part(combobox),
+sl-textarea::part(base) {
+    background-color: var(--color-primary-1);
+    border: 1px solid var(--color-gray-2);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary-2);
+}
+
+sl-input::part(input),
+sl-select::part(display-input) {
+    color: var(--color-primary-2);
+}
+
+sl-radio::part(control) {
+    background-color: var(--color-primary-2);
+}
+
+sl-dialog::part(panel) {
+    background-color: var(--color-primary-1);
+    border-radius: var(--sl-border-radius-x-large);
+}
+
+sl-dialog::part(title) {
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-xl);
+    color: var(--color-primary-2);
+}
+
+sl-dialog::part(close-button)  {
+    color: var(--color-primary-2);
+    font-size: var(--font-size-xl);
+} 
+
+sl-dialog::part(body) {
+    padding: 0 var(--sl-spacing-large) var(--sl-spacing-large) var(--sl-spacing-large);
+    }
+
+sl-radio-group sl-radio-button::part(form-control) {
+    padding: 10px;
+    background-color: var(--color-secondary-1);
+}
+
+sl-option::part(base) {
+    background-color: var(--color-primary-1);
+    padding: 10px 0;
+    color: var(--color-primary-2);
+}
+
+sl-select::part(listbox){
+    background: var(--color-primary-1);
+    border: 1px solid var(--color-primary);
+
+}
+
+sl-radio-group.radio-tabs::part(form-control) {
+    background-color: var(--color-secondary-1);
+    padding: 5px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+sl-radio-group.radio-tabs sl-radio-button::part(button) {
+    width: 148px;
+    padding: 0 5px;
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-primary-2);
+    border: none;
+
+}
+
+sl-radio-group.radio-tabs sl-radio-button::part(button):hover {
+    background-color: var(--color-secondary);
+    border-radius: var(--sl-border-radius-large);
+}
+
+sl-radio-group.radio-tabs sl-radio-button::part(button--checked) {
+    background-color: var(--color-secondary);
+    border-radius: var(--sl-border-radius-large);
+    border: none;
+}
+
+sl-input::part(form-control-label),
+sl-select::part(form-control-label),
+sl-radio-group::part(form-control-label)  {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary-2);
+}
+
+sl-input::part(base):focus-visible {
+    border: 1px solid var(--color-primary);
+    box-shadow: 0 0 0 2px var(--color-primary-2);
+}
+
+sl-select::part(form-control-input){
+    font-size: var(--font-size-sm);
+}
+
+sl-radio-group.radio__tipo::part(form-control-input) {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+

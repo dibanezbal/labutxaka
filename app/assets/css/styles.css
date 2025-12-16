@@ -1,72 +1,161 @@
-/* 
-  Modern CSS Reset
-  A practical baseline for better web development
-*/
+/* Importar estilos de los componentes */
 
 @import url('./components/cards.css');
+@import url('./components/modals.css');
 @import url('./components/buttons.css');
 @import url('./components/alerts.css');
+@import url('./components/sidebar.css');
 
+/* CSS reset basado en https://piccalil.li/blog/a-modern-css-reset/ */
 
-/* 1. More intuitive box-sizing model */
-*, *::before, *::after {
+/* Box sizing rules */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
-}
-
-/* 2. Remove default margin */
-* {
+  font-family: var(--font-family-base);
   margin: 0;
   padding: 0;
 }
 
-/* 3. Enable keyword animations */
+/* Prevent font size inflation */
 html {
-  interpolate-size: allow-keywords;
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
 }
 
+/* Remove default margin in favour of better control in authored CSS */
+body, h1, h2, h3, h4, p,
+figure, blockquote, dl, dd {
+  margin-block-end: 0;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+}
+
+/* Set core body defaults */
 body {
-  /* 4. Add accessible line-height */
+  min-height: 100vh;
   line-height: 1.5;
-  /* 5. Improve text rendering */
-  -webkit-font-smoothing: antialiased;
 }
 
-/* 6. Improve media defaults */
-img, picture, video, canvas, svg {
-  display: block;
-  max-width: 100%;
+/* Set shorter line heights on headings and interactive elements */
+h1, h2, h3, h4,
+button, input, label {
+  line-height: 1.1;
 }
 
-/* 7. Inherit fonts for form controls */
-input, button, textarea, select {
-  font: inherit;
-}
-
-/* 8. Avoid text overflows */
-p, h1, h2, h3, h4, h5, h6 {
-  overflow-wrap: break-word;
-}
-
-/* 9. Improve line wrapping */
-p {
-  text-wrap: pretty;
-}
-h1, h2, h3, h4, h5, h6 {
+/* Balance text wrapping on headings */
+h1, h2,
+h3, h4 {
   text-wrap: balance;
 }
 
-/* 10. Create a root stacking context */
-#root, #__next {
-  isolation: isolate;
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+  color: currentColor;
 }
 
-main.layout-content {
-  padding: 20px;
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
 }
 
-.layout { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
-.sidebar { background: #fff; padding: 16px; }
+/* Inherit fonts for inputs and buttons */
+input, button,
+textarea, select {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+}
+
+/* Make sure textareas without a rows attribute are not tiny */
+textarea:not([rows]) {
+  min-height: 10em;
+}
+
+/* Anything that has been anchored to should have extra scroll margin */
+:target {
+  scroll-margin-block: 5ex;
+}
+
+/* Fin del reset CSS */
+
+/* Estilos globales para LaButxaka */
+
+:root {
+
+  /* Definición de variables CSS de LaButxaka */
+  /* Colors */
+  --color-primary: #38803A;
+  --color-primary-1: #EDF7ED;
+  --color-primary-2: #275928;
+  --color-primary-3: #081208;
+  --color-secondary: #FBBF24;
+  --color-secondary-1: #FFF8E6;
+  --color-secondary-2: #7D5B02;
+  --color-secondary-3: #191200;
+  --color-tertiary: #5386E4;
+  --color-tertiary-1: #E9EFFC;
+  --color-tertiary-2: #11326E;
+  --color-tertiary-3: #030A16;
+  --color-orange: #EB8031;
+  --color-red: #E94220;
+  --color-white: #FBFBFB;
+  --color-gray: #576158;
+  --color-gray-1: #F2F3F2;
+  --color-gray-2: #3C433D;
+  --color-black: #0C0D0C;
+  --color-lilac: #80387D;
+
+  /* Typography */
+  --font-family-base: 'Inter', sans-serif;
+  --font-size-base: 12px;
+  --font-size-xs: 10px;
+  --font-size-sm: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 20px;
+  --font-size-xl: 24px;
+  --font-size-2xl: 30px;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  /* Reemplazo de Shoelace */
+  --sl-color-primary-500: var(--color-primary);
+  --sl-color-primary-600: var(--color-primary-2);
+  --sl-color-primary-700: var(--color-primary-2);
+  --sl-color-secondary-500: var(--color-secondary);
+  --sl-color-secondary-600: var(--color-secondary-2);
+
+}
+
+h1 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary-2);
+}
+
+
+.layout { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; background-color: var(--color-primary-1);}
+
+main.layout-content { padding: 30px 60px;}
+
+.topbar {
+  margin-bottom: 20px;
+}
+
+.topbar-user { display: flex; justify-content: flex-end; align-items: center; gap: 16px; }
+
 .content { padding: 16px; }
-.sidebar a { display:block; padding:8px 10px; border-radius:6px; color:#111; text-decoration:none; }
-.sidebar a:hover { background:#f3f4f6; }
 .movimientos-container { max-width: 100%; margin: 20px auto; }
+
+@media (max-width: 768px) {
+  aside.layout-sidebar { display: none; }
+}
