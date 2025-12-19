@@ -22,14 +22,22 @@ span.font-ingreso {
 
 
 .mov-card {
-  border-radius: var(--sl-border-radius-large);
-  background: var(--color-white);
   color: var(--color-primary-2)
 }
 
-.mov-card:hover {
+.mov-card:not(.mov-card--resumen){
+  border-radius: var(--sl-border-radius-large);
+  background: var(--color-white);
+}
+
+.mov-card:not(.mov-card--resumen):hover {
   box-shadow: var(--sl-shadow-large);
   background-color: var(--color-secondary-1);
+}
+
+.mov-card--selected:hover {
+  box-shadow: var(--sl-shadow-x-large);
+  background-color: var(--color-secondary);
 }
 
 .mov-card__body {
@@ -37,7 +45,7 @@ span.font-ingreso {
   font-size: var(--font-size-sm);
 }
 
-.mov-card__row {
+.mov-card:not(.mov-card--resumen) .mov-card__row {
   display: grid;
   grid-template-columns:
     20px         /* checkbox */
@@ -46,6 +54,18 @@ span.font-ingreso {
     1fr          /* comentario */
     200px        /* cuenta */
     60px        /* tipo registro */
+    90px;       /* cantidad */
+  align-items: center;
+  gap: 14px;
+}
+
+.mov-card.mov-card--resumen .mov-card__body .mov-card__row {
+  display: grid;
+  grid-template-columns:
+    100px        /* fecha */
+    160px          /* categoría */
+    1fr          /* comentario */
+    200px        /* cuenta */
     90px;       /* cantidad */
   align-items: center;
   gap: 14px;
@@ -74,11 +94,6 @@ span.font-ingreso {
 
 /* Accesibilidad y click */
 .mov-card--clickable { cursor: pointer; }
-
-.card-list__grid {
-    display: grid;
-    gap: 8px;
-}
 
 .mov-card__content {
     display: flex;
@@ -109,7 +124,7 @@ span.font-ingreso {
   margin-right: 6px;
 }
 
-.mov-card--selected {
+.mov-card.mov-card--clickable.mov-card--selected {
   background-color: var(--color-secondary);
   color: var(--color-primary-2);
 }

@@ -1,0 +1,62 @@
+.card-list__lista-movimientos:not(.card-list__lista-movimientos--resumen) {
+    display: grid;
+    gap: 8px;
+}
+
+.card-list__lista-movimientos.card-list__lista-movimientos--resumen {
+    border-radius: var(--sl-border-radius-large);
+    background: var(--color-white);
+}
+
+.card-list--resumen__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    color: var(--color-primary-2);
+}
+
+.card-list__headers, .card-list--resumen__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 15px;
+    font-weight: var(--font-weight-bold);
+}
+
+.card-list--resumen__header h3 {
+    font-size: var(--font-size-md);
+}
+
+.card-list--resumen__header a {
+    font-size: var(--font-size-xs);
+    color: var(--color-primary-2);
+    text-decoration: none;
+}
+
+.card-list__headers ul.card-list__labels {
+    display: grid;
+    grid-template-columns: 100px        
+    160px          /* categoría */
+    1fr          /* comentario */
+    200px        /* cuenta */
+    70px        /* tipo registro */
+    100px;    /* cantidad */
+    align-items: center;
+    gap: 14px;
+    margin-left: 20px;
+    height: 50px;
+    width: 100%;
+    color: var(--color-primary-2);
+}
+
+.card-list__headers ul.card-list__labels li {
+    list-style: none;
+    display: inline-block;
+}
+
+.movimientos-controls {
+    margin-top: 50px;
+}
+

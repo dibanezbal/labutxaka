@@ -1,8 +1,11 @@
 <?php
-require_once __DIR__ . "/config/config.php";
-require_once __DIR__ . "/core/routes.php";
-require_once __DIR__ . "/config/database.php";
+// Inicia la sesión si no está activa
+if (session_status() !== PHP_SESSION_ACTIVE) { session_start(); }
 
+// Carga las dependencias necesariaas
+require_once __DIR__ . '/core/routes.php';
+require_once __DIR__ . "/config/config.php";
+require_once __DIR__ . "/config/database.php";
 
 // Determina el controlador a cargar
 if (isset($_GET['c'])) {

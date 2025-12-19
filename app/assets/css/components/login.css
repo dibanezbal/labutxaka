@@ -1,0 +1,54 @@
+
+section.auth-home {
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background-color: var(--color-white);
+  border-radius: var(--sl-border-radius-large);
+  box-shadow: var(--sl-shadow-large);
+  background: radial-gradient(#3E8E40, #367C38, #337535);
+}
+
+section.auth-home img {
+  width: 335px;
+  align-self: center;
+  margin-bottom: 40px;
+}
+
+section.auth-home sl-input::part(form-control-label) {
+  color: var(--color-white);
+  font-weight: var(--font-weight-medium);
+}
+
+section.auth-home sl-tab-group::part(base) {
+
+}
+
+section.auth-home sl-button::part(base) {
+  background-color: var(--color-secondary);
+  color: var(--color-primary-2);
+  padding: 0 20px;
+  margin: 20px auto;
+}
+
+section.auth-home sl-button::part(base):hover {
+  background-color: var(--color-secondary-1);
+}
+
+section.auth-home sl-input::part(form-control) {
+  margin-bottom: 20px;
+}
+
+section.auth-home form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+section.auth-home sl-tab::part(base) {
+  color: var(--color-primary-1);
+}

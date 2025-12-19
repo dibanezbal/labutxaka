@@ -1,3 +1,5 @@
+<?php $usuario = $_SESSION['user_name'] ?? 'Invitado' ?>
+
 <div class="topbar">
     <div class="topbar-user">
         <sl-button id="btn-open-create-form" class="btn btn-open-modal primary-button" size="medium" variant="primary"
@@ -9,11 +11,12 @@
             <div id="create-dialog-content"></div>
         </sl-dialog>
         <sl-dropdown>
-            <sl-button slot="trigger" circle>
-                <sl-icon name="person-circle"></sl-icon>
+            <sl-button slot="trigger" caret>
+                <?= htmlspecialchars($usuario) ?>
             </sl-button>
             <sl-menu>
-                <sl-menu-item value="cut">Cerrar sesión</sl-menu-item>
+                <sl-divider></sl-divider>
+                <sl-menu-item onclick="location.href='index.php?c=usuarios&a=logout'">Cerrar Sesión</sl-menu-item>
             </sl-menu>
         </sl-dropdown>
     </div>

@@ -18,10 +18,10 @@ $activePage = fn(string $controller, string $action = 'index') =>
             <sl-icon name="cash-coin"></sl-icon>
             Movimientos
         </a>
-        <a class="sidebar-link <?= $activePage('movimientos', 'cuentas') ?>" href="?c=movimientos&a=cuentas">
+        <a class="sidebar-link <?= $activePage('cuentas', 'index') ?>" href="?c=cuentas&a=index">
             <sl-icon name="wallet2"></sl-icon> Cuentas
         </a>
-        <a class="sidebar-link <?= $activePage('movimientos', 'categorias') ?>" href="?c=movimientos&a=categorias">
+        <a class="sidebar-link <?= $activePage('categorias', 'index') ?>" href="?c=categorias&a=index">
             <sl-icon name="list-stars"></sl-icon> Categorías
         </a>
     </nav>

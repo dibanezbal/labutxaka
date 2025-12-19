@@ -1,49 +1,51 @@
 <?php
-	
+
+require_once __DIR__ . '/../models/CuentasModel.php';
+require_once __DIR__ . '/../models/CategoriasModel.php';
+
 	class MovimientosModel {
 		
 		private $db;
 		private $movimientos;
+		private CuentasModel $cuentasModel;
+		private CategoriasModel $categoriasModel;
 		
 		public function __construct()
 		{
 			$this->db = Connect::connection();
 			$this->movimientos = array();
+			$this->cuentasModel = new CuentasModel();
+			$this->categoriasModel = new CategoriasModel();
 		}
 		
-		public function getAllMovimientos($sortBy = 'date_desc')
+		public function getAllMovimientosByUser($userId)
 		{
-			switch ($sortBy) {
-				case 'fecha_asc':
-					$orderBy = 'fecha_registro ASC';
-					break;
-				case 'cantidad_desc':
-					$orderBy = 'cantidad DESC';
-					break;
-				case 'cantidad_asc':
-					$orderBy = 'cantidad ASC';
-					break;
-				default:
-					$orderBy = 'fecha_registro DESC';
-			}
-			$sql = "SELECT * FROM movimientos ORDER BY $orderBy";
-			$result = $this->db->query($sql);
-			while($row = $result->fetch_assoc())
-			{
-				$this->movimientos[] = $row;
-			}
-			return $this->movimientos;
+			$sql = "SELECT m.*, c.nombre AS categoria_nombre, a.nombre AS cuenta_nombre
+			FROM movimientos m
+			LEFT JOIN categorias c ON c.id = m.categoria_id
+			LEFT JOIN cuentas a    ON a.id = m.cuenta_id
+			WHERE m.usuario_id = ?
+			ORDER BY m.fecha_registro DESC, m.id DESC";
+
+			$stmt = $this->db->prepare($sql);
+			$stmt->bind_param('i', $userId);
+			$stmt->execute();
+			$res = $stmt->get_result();
+			
+			return $res ? $res->fetch_all(MYSQLI_ASSOC) : [];
 		}
 
 		public function insertMovimiento($categoria, $cuenta, $tipo_registro, $tipo_movimiento, $cantidad, $fecha, $comentario)
 		{
+			$userId = $_SESSION['user_id'] ?? null;
 			
-			$result = $this->db->query("INSERT INTO `movimientos` (usuario_id, categoria_id, cuenta_id, tipo_registro, tipo_movimiento, cantidad, fecha_registro, comentario) VALUES ( 1, $categoria, $cuenta, '$tipo_registro', '$tipo_movimiento', $cantidad, '$fecha', '$comentario')");
+			$result = $this->db->query("INSERT INTO `movimientos` (usuario_id, categoria_id, cuenta_id, tipo_registro, tipo_movimiento, cantidad, fecha_registro, comentario) VALUES ( $userId, $categoria, $cuenta, '$tipo_registro', '$tipo_movimiento', $cantidad, '$fecha', '$comentario')");
 		}
 		
 		public function editMovimiento($id ,$categoria, $cuenta, $tipo_registro, $tipo_movimiento, $cantidad, $fecha, $comentario)
 		{	
-			$result = $this->db->query("UPDATE `movimientos` SET id=$id, usuario_id = 1, categoria_id = $categoria, cuenta_id = $cuenta, tipo_movimiento = '$tipo_movimiento', tipo_registro = '$tipo_registro', cantidad = $cantidad, fecha_registro = '$fecha', comentario = '$comentario' WHERE id = $id");			
+			$userId = $_SESSION['user_id'] ?? null;
+			$result = $this->db->query("UPDATE `movimientos` SET id=$id, usuario_id = $userId, categoria_id = $categoria, cuenta_id = $cuenta, tipo_movimiento = '$tipo_movimiento', tipo_registro = '$tipo_registro', cantidad = $cantidad, fecha_registro = '$fecha', comentario = '$comentario' WHERE id = $id");			
 		}
 		
 		public function delete(array $ids) {
@@ -64,29 +66,14 @@
 			return $row;
 		}
 
-		// Obtener categorías
-
-		public function getCategorias(){
-			$categorias = array();
-			$sql = "SELECT id, nombre FROM categorias";
-			$result = $this->db->query($sql);
-			while($row = $result->fetch_assoc())
-			{
-				$categorias[$row['id']] = $row['nombre'];
-			}
-			return $categorias;
+		// Obtener cuentas
+		public function getCuentas() {
+			return $this->cuentasModel->getAllCuentas();
 		}
 
-		// Obtener cuentas
-		public function getCuentas(){
-			$cuentas = array();
-			$sql = "SELECT id, nombre FROM cuentas";
-			$result = $this->db->query($sql);
-			while($row = $result->fetch_assoc())
-			{
-				$cuentas[$row['id']] = $row['nombre'];
-			}
-			return $cuentas;
+		// Obtener categorías
+		public function getCategorias() {
+			return $this->categoriasModel->getAllCategorias();
 		}
     
 	} 

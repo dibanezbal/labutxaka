@@ -1,5 +1,4 @@
 <?php
-
 function loadController($controllerName)
 {
     $controllerClass = ucfirst(strtolower($controllerName)) . 'Controller';
@@ -33,4 +32,3 @@ function loadAction($controllerInstance, $action, $id = null)
 ?>
 
 <?php
-error_log("Ruta: c=" . ($_GET['c'] ?? '') . " a=" . ($_GET['a'] ?? '') . " method=" . ($_SERVER['REQUEST_METHOD'] ?? ''));

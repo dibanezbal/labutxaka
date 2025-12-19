@@ -16,6 +16,10 @@
     </script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.10.0/cdn/shoelace.js"></script>
 
+    <!-- Componentes propios -->
+    <script type="module" src="app/assets/js/components/card-list.js"></script>
+    <script type="module" src="app/assets/js/components/modal.js"></script>
+
     <!-- Estilos propios -->
     <link rel="stylesheet" href="app/assets/css/styles.css" />
 </head>

@@ -45,27 +45,27 @@ $fecha_movimiento = date('Y-m-d', strtotime($movimiento['fecha_registro']));
         <sl-select name="cuenta_id" id="cuenta" placeholder="Elige una cuenta" label="Cuenta"
             value="<?= $movimiento['cuenta_id']; ?>" required>
             <?php $icon_cuenta = ''; ?>
-            <?php foreach ($cuentas as $id => $nombre): ?>
+            <?php foreach ($cuentas as $cuenta): ?>
             <?php
-              if ($nombre === 'Efectivo') {
+              if ($cuenta['nombre'] === 'Efectivo') {
                 $icon_cuenta = 'coin';
-              } elseif ($nombre === 'Ahorro') {
+              } elseif ($cuenta['nombre'] === 'Ahorro') {
                 $icon_cuenta = 'piggy-bank';
               } else {
                 $icon_cuenta = 'credit-card-2-back';
               }
             ?>
-            <sl-option value="<?= $id; ?>" data-icon="<?= $icon_cuenta ?>">
+            <sl-option value="<?= $cuenta['id']; ?>" data-icon="<?= $icon_cuenta ?>">
                 <sl-icon name="<?= $icon_cuenta ?>"></sl-icon>
-                <?= htmlspecialchars($nombre) ?>
+                <?= htmlspecialchars($cuenta['nombre']) ?>
             </sl-option>
             <?php endforeach; ?>
         </sl-select>
 
         <sl-select name="categoria_id" id="categoria" placeholder="Elige una categoría" label="Categoría"
             value="<?= $movimiento['categoria_id']; ?>" required>
-            <?php foreach ($categorias as $id => $nombre): ?>
-            <sl-option value="<?= $id; ?>"><?= $nombre; ?></sl-option>
+            <?php foreach ($categorias as $categoria): ?>
+            <sl-option value="<?= $categoria['id']; ?>"><?= $categoria['nombre']; ?></sl-option>
             <?php endforeach; ?>
         </sl-select>
     </div>
@@ -84,8 +84,10 @@ $fecha_movimiento = date('Y-m-d', strtotime($movimiento['fecha_registro']));
         value="<?= htmlspecialchars($movimiento['comentario']); ?>"></sl-input>
 
     <div class="form__buttons">
-        <sl-button class="form__button--cancel" variant="secondary" onclick="window.location.href='index.php'"
-            size="medium" pill>Cancelar</sl-button>
+        <sl-button class="form__button--cancel" variant="secondary"
+            onClick="document.getElementById('edit-dialog').hide()" size="medium" pill>
+            Cancelar
+        </sl-button>
         <sl-button class="form__button--submit" type="submit" variant="primary" size="medium" pill>Guardar</sl-button>
     </div>
 </form>
