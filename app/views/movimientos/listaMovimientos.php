@@ -5,15 +5,7 @@
     $cantidadStyle = $m['tipo_movimiento'] === 'Gasto' ? 'font-gasto' : 'font-ingreso';
     $cantidadSymbol = $m['tipo_movimiento'] === 'Gasto' ? '-' : '+';
     $cantidad = $cantidadSymbol . ' ' . number_format((float)$m['cantidad'], 2, ',', '.');
-    $icon_cuenta = '';
-
-    if ([$m['cuenta_nombre']] === 'Efectivo') {
-        $icon_cuenta = 'coin';
-    } else if ([$m['cuenta_nombre']] === 'Ahorro'){
-        $icon_cuenta = 'piggy-bank';
-    } else {
-        $icon_cuenta = 'credit-card-2-back';
-    }
+   
 
     ?>
     <div class="mov-card mov-card--clickable" data-id="<?= (int)$m['id'] ?>" role="button">
@@ -22,8 +14,17 @@
                 <input type="checkbox" class="select-movimiento mov-card__checkbox" data-id="<?= (int)$m['id'] ?>">
                 <span class="mov-card__date"><?= htmlspecialchars($fecha) ?></span>
                 <?php
-                  $categoria = $categorias[$m['categoria_id']] ?? '—';
-                  $cuenta    = $cuentas[$m['cuenta_id']] ?? '—';
+                $categoria = $categorias[$m['categoria_id']] ?? '—';
+                $cuenta    = $cuentas[$m['cuenta_id']] ?? '—';
+                $icon_cuenta = '';
+
+                if ($m['cuenta_nombre'] === 'Efectivo') {
+                    $icon_cuenta = 'coin';
+                } else if ($m['cuenta_nombre'] === 'Ahorro'){
+                    $icon_cuenta = 'piggy-bank';
+                } else {
+                    $icon_cuenta = 'credit-card-2-back';
+                }
                 ?>
                 <span class="mov-card__category"><?= htmlspecialchars(($m['categoria_nombre'] ?? '—')) ?></span>
                 <?php if (!empty($m['comentario'])): ?>
