@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="app/assets/css/styles.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Shoelace -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.10.0/cdn/themes/light.css" />
 <script type="module">
