@@ -93,8 +93,8 @@ span.font-ingreso {
   justify-self: end;
   font-weight: 600;
 }
-.font-gasto  { color: #c0392b; }
-.font-ingreso{ color: #1e7e34; }
+.font-gasto  { color: var(--color-red); }
+.font-ingreso{ color: var(--color-primary-2); }
 
 .mov-card__comment,
 .mov-card__category,
@@ -210,11 +210,11 @@ ul.card-list__cuentas li span.small-card__saldo {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0 var(--sl-spacing-small);
 }
 
 #gasto-mas-mes .small-card__content {
   justify-content: flex-start;
+  gap: 20px;
 }
 
 .small-card.small-card--white .small-card__content .icon-wrapper {
@@ -226,7 +226,6 @@ ul.card-list__cuentas li span.small-card__saldo {
   border-radius: 50%;
   background-color: var(--color-primary-1);
   color: var(--color-primary-2);
-  margin-right: var(--sl-spacing-medium);
 }
 
 .small-card.small-card--white .small-card__content sl-icon {
@@ -244,8 +243,7 @@ ul.card-list__cuentas li span.small-card__saldo {
   flex-direction: column;
   justify-content: space-between;
   height: 60px;
-  width: 100%;
-  margin-left: 20px;
+  width: 70%;
 }
 
 .small-card__content .small-card__balance-section-info {
@@ -267,6 +265,10 @@ ul.card-list__cuentas li span.small-card__saldo {
     font-size: var(--font-size-base);
   }
 
+  ul.card-list__cuentas li.small-card__cuentas {
+    margin-right: 0;
+  }
+
   .group_categoria-comentario, 
   .group_tipo-cuenta,
    {
@@ -274,7 +276,7 @@ ul.card-list__cuentas li span.small-card__saldo {
     flex-direction: column;
   }
 
-  .mov-card.mov-card--resumen .mov-card__row {
+  .mov-card.mov-card--resumen .mov-card__row{
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -286,13 +288,18 @@ ul.card-list__cuentas li span.small-card__saldo {
     font-size: var(--font-size-sm);
   }
 
-  .mov-card__row.mov-card__row--mobile--bottom {
+  .mov-card.mov-card--resumen .mov-card__row.mov-card__row--mobile--bottom {
     display: flex;
     justify-content: space-between;
     width: 100%;
   }
 
   .mov-card .mov-card__row input {
+    display: none;
+  }
+
+  .mov-card__account--desktop, 
+  .mov-card__amount--desktop {
     display: none;
   }
 }

@@ -28,6 +28,7 @@ section.dashboard-movimientos__wrapper {
     grid-area: gastos-por-categoria;
 }
 
+
 #gastos-por-categoria h3.categoria-title {
     color: var(--color-primary-2)
 }
@@ -63,17 +64,38 @@ section.dashboard-movimientos__wrapper {
     min-height: 300px;
 }
 
-@media (max-width: 1200px) {
-    section.dashboard-movimientos__wrapper {
-        grid-template-columns: 1fr;
+#gasto-mas-mes .font-gasto {
+    font-size: var(--sl-font-size-x-large);
+    font-weight: var(--font-weight-bold);
+}
+
+
+
+@media (max-width: 1280px) {
+  #gasto-mas-mes .font-gasto {
+    font-size: var(--sl-font-size-medium);
+  }
+
+  .small-card__content .saldo-total {
+    font-size: var(--sl-font-size-x-large);
+    font-weight: var(--font-weight-bold);
+  }
+}
+
+@media (max-width: 1024px) {
+  section.dashboard-movimientos__wrapper {
+        grid-template-columns: repeat(2, 1fr);
         grid-template-areas:
-        "saldo-total"
-        "balance"
-        "gasto-mas-mes"
-        "ultimos-movimientos"
-        "gastos-por-categoria";
-        min-width: 0;
-    }
+        "saldo-total balance"
+        "gasto-mas-mes gastos-por-categoria"
+        "ultimos-movimientos ultimos-movimientos"
+  }
+
+  #ultimos-movimientos {
+    grid-column: span 2;
+  }
+
+
 }
 
 @media (max-width: 768px) {
@@ -86,6 +108,8 @@ section.dashboard-movimientos__wrapper {
         "gastos-por-categoria"
         "ultimos-movimientos"
   }
+
+
 
   #ultimos-movimientos {
     grid-column: span 1;

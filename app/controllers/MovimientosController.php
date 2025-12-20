@@ -8,7 +8,7 @@ class MovimientosController
 
 	public function __construct() {
 	
-			$this->model = new MovimientosModel();
+	$this->model = new MovimientosModel();
 	$userId = $_SESSION['user_id'] ?? null;
 	}
 

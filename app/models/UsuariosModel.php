@@ -6,7 +6,7 @@ class UsuariosModel {
 
 	public function __construct()
 	{
-			$this->db = Connect::connection();
+		$this->db = Connect::connection();
 	}
 
 	public function create($usuario, $email, $password, $fecha_registro) {

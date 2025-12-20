@@ -136,3 +136,9 @@ ul.card-list__cuentas {
     display: flex;
   }
 }
+
+@media (max-width: 520px) {
+  .card-list__select-all {
+    width: 140px;
+  }
+}

@@ -174,7 +174,7 @@ foreach ($movimientos as $m) {
 
             <div>
                 <p class="font-ingreso"><?= htmlspecialchars($categoriaMaxima) ?></p>
-                <p class="font-gasto font-weight-bold font-size-extra-lg">
+                <p class="font-gasto font-weight-bold">
                     - <?= $gastoMaximoTotalFmt; ?> €
                 </p>
             </div>
