@@ -183,3 +183,15 @@ sl-dialog#delete-dialog::part(footer) {
     font-size: var(--font-size-md);
     color: var(--color-primary-2);
 }
+
+@media (max-width: 576px) {
+    sl-button.form__button--submit::part(base),
+    sl-button.form__button--cancel::part(base) {
+        width: 120px;
+    }
+
+    sl-radio-group.radio-tabs sl-radio-button::part(button) {
+        width: 100px;
+        font-size: var(--font-size-sm);
+    }
+}
