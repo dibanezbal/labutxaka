@@ -8,7 +8,7 @@
     background: var(--color-white);
 }
 
-.card-list--resumen__header {
+.card-list__header--resumen {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -17,7 +17,7 @@
     color: var(--color-primary-2);
 }
 
-.card-list__headers, .card-list--resumen__header {
+.card-list__headers, .card-list__header--resumen {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -25,38 +25,114 @@
     font-weight: var(--font-weight-bold);
 }
 
-.card-list--resumen__header h3 {
+.card-list__header--resumen h3 {
     font-size: var(--font-size-md);
 }
 
-.card-list--resumen__header a {
-    font-size: var(--font-size-xs);
+.card-list__header--resumen a {
+    font-size: var(--font-size-base);
     color: var(--color-primary-2);
     text-decoration: none;
 }
 
 .card-list__headers ul.card-list__labels {
     display: grid;
-    grid-template-columns: 100px        
-    160px          /* categoría */
-    1fr          /* comentario */
-    200px        /* cuenta */
-    70px        /* tipo registro */
-    100px;    /* cantidad */
+    grid-template-columns:      
+    20px         /* checkbox */
+    1fr        /* fecha */
+    1fr          /* categoría */
+    2fr          /* comentario */
+    1fr        /* cuenta */
+    1fr        /* tipo registro */
+    1fr;       /* cantidad */
     align-items: center;
     gap: 14px;
-    margin-left: 20px;
     height: 50px;
     width: 100%;
     color: var(--color-primary-2);
 }
 
 .card-list__headers ul.card-list__labels li {
-    list-style: none;
-    display: inline-block;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.card-list__headers ul.card-list__labels li:last-child {
+  justify-content: flex-end;
+  padding-right: 20px;
+}
+
+.card-list__headers ul.card-list__labels li:nth-child(5),
+.card-list__headers ul.card-list__labels li:nth-child(6) {
+  margin-left: -10px;
 }
 
 .movimientos-controls {
     margin-top: 50px;
 }
 
+.card-list__cuentas-wrapper {
+    margin: 55px 0;
+}
+
+.card-list__lista-movimientos.card-list__lista-movimientos--resumen {
+    padding: var(--sl-spacing-medium);
+}
+
+
+ul.card-list__cuentas {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.mov-card:not(.mov-card--resumen) .mov-card__row.only-mobile,
+.only-mobile {
+  display: none;
+}
+
+.card-list__lista-movimientos-mobile {
+  display: none;
+}
+
+
+@media (max-width: 768px) {
+  ul.card-list__cuentas {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .card-list__cuentas-wrapper {
+    margin: 20px 0;
+  }
+
+  ul.card-list__cuentas li span.small-card__saldo {
+    font-size: var(--font-size-lg);
+  }
+
+  .card-list__headers ul.card-list__labels li {
+    display: none;
+  }
+
+  .only-mobile {
+    display: inline;
+  }
+
+  .card-list__select-all {
+    display: flex;
+    flex-direction: row-reverse;
+    width: 165px;
+  }
+
+  .card-list__select-all span {
+    margin-left: 10px;
+  }
+
+  .card-list__lista-movimientos:not(.card-list__lista-movimientos--resumen) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mov-card:not(.mov-card--resumen) .mov-card__row.only-mobile {
+    display: flex;
+  }
+}

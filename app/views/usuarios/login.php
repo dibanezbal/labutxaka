@@ -23,7 +23,7 @@ window.__shoelace_base_path = 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoe
 
         <sl-tab-panel name="signup">
             <form method="POST" action="index.php?c=usuarios&a=signup" autocomplete="off">
-                <sl-input name="name" type="text" label="Nombre" size="small" required></sl-input>
+                <sl-input name="usuario" type="text" label="Nombre" size="small" required></sl-input>
                 <sl-input name="email" type="email" label="Email" size="small" required></sl-input>
                 <sl-input name="password" type="password" label="Contraseña (mín. 6)" size="small" required></sl-input>
                 <sl-input name="confirm" type="password" label="Confirmar contraseña" size="small" required></sl-input>

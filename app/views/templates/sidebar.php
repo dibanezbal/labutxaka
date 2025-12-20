@@ -8,9 +8,12 @@ $activePage = fn(string $controller, string $action = 'index') =>
 ?>
 
 <div class="sidebar">
-    <a class="sidebar-title" href="index.php"><img src="app/assets/img/logo_amarillo_vertical.svg" alt=""></a>
+    <a class="sidebar-title logo-desktop" href="index.php?c=movimientos&a=resumen"><img
+            src="app/assets/img/logo_amarillo_vertical.svg" alt=""></a>
+    <a class="sidebar-title logo-mobile" href="index.php?c=movimientos&a=resumen"><img
+            src="app/assets/img/logo_amarillo_horizontal.svg" alt=""></a>
     <nav class="sidebar-nav">
-        <a class="sidebar-link <?= $activePage('resumen', 'index') ?>" href="index.php">
+        <a class="sidebar-link <?= $activePage('movimientos', 'resumen') ?>" href="index.php?c=movimientos&a=resumen">
             <sl-icon name="list-check"></sl-icon>
             Resumen
         </a>
@@ -25,4 +28,17 @@ $activePage = fn(string $controller, string $action = 'index') =>
             <sl-icon name="list-stars"></sl-icon> Categorías
         </a>
     </nav>
+    <div class="sidebar-footer">
+        <p class="sidebar-footer-user">
+            <sl-icon name="person-circle"></sl-icon>
+            <?php
+                $usuarioStr = (string)$usuario;
+                $usuarioCap = mb_strtoupper(mb_substr($usuarioStr, 0, 1, 'UTF-8'), 'UTF-8') . mb_substr($usuarioStr, 1, null, 'UTF-8');
+                echo htmlspecialchars($usuarioCap, ENT_QUOTES, 'UTF-8');
+                ?>
+        </p>
+        <a class="sidebar-footer-link" href="index.php?c=usuarios&a=logout">
+            <sl-icon name="box-arrow-right"></sl-icon>Cerrar Sesión
+        </a>
+    </div>
 </div>

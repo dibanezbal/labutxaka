@@ -8,10 +8,11 @@
    
 
     ?>
-    <div class="mov-card mov-card--clickable" data-id="<?= (int)$m['id'] ?>" role="button">
+    <div class="mov-card mov-card--clickable" data-id="<?= (int)$m['id'] ?>" role="button" tabindex="0">
         <div class="mov-card__body">
             <div class="mov-card__row">
-                <input type="checkbox" class="select-movimiento mov-card__checkbox" data-id="<?= (int)$m['id'] ?>">
+                <input type="checkbox" class="select-movimiento mov-card__checkbox only-desktop"
+                    data-id="<?= (int)$m['id'] ?>">
                 <span class="mov-card__date"><?= htmlspecialchars($fecha) ?></span>
                 <?php
                 $categoria = $categorias[$m['categoria_id']] ?? '—';
@@ -28,15 +29,24 @@
                 ?>
                 <span class="mov-card__category"><?= htmlspecialchars(($m['categoria_nombre'] ?? '—')) ?></span>
                 <?php if (!empty($m['comentario'])): ?>
-                <span class="mov-card__comment"><?= htmlspecialchars(($m['comentario'] ?? '—')) ?></span>
+                <span class="mov-card__comment only-desktop"><?= htmlspecialchars(($m['comentario'] ?? '—')) ?></span>
                 <?php else: ?>
-                <span class="mov-card__comment">—</span>
+                <span class="mov-card__comment only-desktop">—</span>
                 <?php endif; ?>
                 <span class="mov-card__account">
                     <sl-icon name="<?= $icon_cuenta ?>"></sl-icon>
                     <?= htmlspecialchars(($m['cuenta_nombre'] ?? '—')) ?>
                 </span>
                 <span class="mov-card__type"><?= htmlspecialchars($m['tipo_registro'] ?? '') ?></span>
+                <span class="mov-card__amount only-desktop <?= $cantidadStyle ?>"><?= htmlspecialchars($cantidad) ?>
+                    €<span>
+            </div>
+            <div class="mov-card__row only-mobile">
+                <?php if (!empty($m['comentario'])): ?>
+                <span class="mov-card__comment"><?= htmlspecialchars(($m['comentario'] ?? '—')) ?></span>
+                <?php else: ?>
+                <span class="mov-card__comment">—</span>
+                <?php endif; ?>
                 <span class="mov-card__amount <?= $cantidadStyle ?>"><?= htmlspecialchars($cantidad) ?> €<span>
             </div>
         </div>

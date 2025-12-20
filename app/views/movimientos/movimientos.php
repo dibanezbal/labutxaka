@@ -18,17 +18,15 @@
         <sl-button class="form__button--cancel" slot="footer" id="delete-cancel" pill>Cancelar</sl-button>
         <sl-button class="form__button--submit" slot="footer" id="delete-accept" pill>Aceptar</sl-button>
     </sl-dialog>
+
 </div>
 
 <div class="movimientos-container">
-
     <div class="card-list__headers">
-
-        <label class="card-list__select-all">
-            <input type="checkbox" id="select-all">
-        </label>
-
         <ul class="card-list__labels">
+            <label class="card-list__select-all"><span class="only-mobile">Seleccionar todos</span>
+                <input type="checkbox" id="select-all">
+            </label>
             <li>Fecha</li>
             <li>Categoría</li>
             <li>Comentario</li>
@@ -38,6 +36,8 @@
         </ul>
     </div>
 
+    <?php if (empty($movimientos)) : ?>
+    <p class="no-data-message">No hay movimientos registrados.</p>
+    <?php endif; ?>
     <card-list class="card-list__lista-movimientos" data-url="?c=movimientos&a=listaMovimientos"></card-list>
-
 </div>

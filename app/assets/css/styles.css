@@ -1,5 +1,6 @@
 /* Importar estilos de los componentes */
 
+@import url('./components/topbar.css');
 @import url('./components/cards.css');
 @import url('./components/card-list.css');
 @import url('./components/modals.css');
@@ -7,6 +8,7 @@
 @import url('./components/alerts.css');
 @import url('./components/sidebar.css');
 @import url('./components/login.css');
+@import url('./components/dashboard.css');
 
 /* Importar fuente */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
@@ -38,7 +40,8 @@ figure, blockquote, dl, dd {
 
 /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
 ul[role='list'],
-ol[role='list'] {
+ol[role='list'],
+ul, ol {
   list-style: none;
 }
 
@@ -46,6 +49,7 @@ ol[role='list'] {
 body {
   min-height: 100vh;
   line-height: 1.5;
+  width: 100%;
 }
 
 /* Set shorter line heights on headings and interactive elements */
@@ -148,29 +152,53 @@ h1 {
 }
 
 
-.layout { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; background-color: var(--color-primary-1);}
+.layout { 
+  display: grid; 
+  grid-template-columns: 260px 1fr;
+  grid-template-rows: 64px 1fr;
+  grid-template-areas:
+  " sidebar header"
+  " sidebar main ";
+  min-height: 100vh; 
+  background-color: var(--color-primary-1);
+  width: 100%;
+}
 
-main.layout-content { padding: 30px 60px; }
-main.layout-content ul { 
-  list-style: none; 
+
+header.layout-topbar {
+  grid-area: header;
+  padding: 60px;
+}
+
+aside.layout-sidebar {
+  grid-area: sidebar;
+  min-height: 100vh;
+}
+
+main.layout-content { 
+  grid-area: main;
+  padding: 30px 60px; 
+}
+
+header.layout-topbar,
+main.layout-content {
+  min-width: 0;
+}
+
+
+body#categorias main.layout-content ul,
+body#cuentas main.layout-content ul { 
   margin-top: 20px;
   padding-left: 10px;
 }
 
-main.layout-content ul li {
+body#categorias main.layout-content ul li,
+body#cuentas main.layout-content ul li {
   margin-bottom: 10px;
 }
 
-.topbar {
-  margin-bottom: 30px;
-}
-
-.topbar-user { 
-  display: flex; 
-  justify-content: flex-end; 
-  align-items: center; 
-  gap: 16px; 
-}
+.font-weight-bold { font-weight: var(--font-weight-bold); }
+.font-size-extra-lg { font-size: var(--font-size-2xl); } 
 
 .content { padding: 16px; }
 .movimientos-container { max-width: 100%; margin: 20px auto; }
@@ -182,7 +210,46 @@ p.no-data-message {
   margin-top: 50px;
 }
 
-@media (max-width: 768px) {
-  aside.layout-sidebar { display: none; }
+.only-deskotp { display: inline-block; }
+
+@media (max-width: 1024px) {
+  main.layout-content {
+    padding: 20px 30px;
+  }
 }
 
+@media (max-width: 768px) {
+  aside.layout-sidebar { display: none; }
+
+  .layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas:
+      "header"
+      "sidebar"
+      "main";
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  header.layout-topbar {
+    padding: 20px;
+    background-color: var(--color-primary);
+  }
+
+  main.layout-content {
+    padding: 20px;
+    width: 100%;
+  }
+
+  body#cuentas-index main.layout-content,
+  body#categorias-index main.layout-content { 
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .only-desktop { display: none; }
+}

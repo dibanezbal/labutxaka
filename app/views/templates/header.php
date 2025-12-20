@@ -1,12 +1,14 @@
 <?php
-// filepath: /Users/David/code/labutxaka/app/views/templates/header.php
+$c = $_GET['c'] ?? 'usuarios';
+$a = $_GET['a'] ?? 'index';
+$pageId = $c . '-' . $a;
 ?>
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= htmlspecialchars($titulo ?? 'Labutxaka'); ?></title>
 
     <!-- Shoelace -->
@@ -24,14 +26,18 @@
     <link rel="stylesheet" href="app/assets/css/styles.css" />
 </head>
 
-<body class="app-body">
-
+<body id="<?= htmlspecialchars($pageId); ?>">
     <div class="layout">
+
         <aside class="layout-sidebar">
             <?php require __DIR__ . '/sidebar.php'; ?>
         </aside>
-        <main class="layout-content">
+
+        <header class="layout-topbar">
             <?php require __DIR__ . '/topbar.php'; ?>
+        </header>
+
+        <main class="layout-content">
             <div class="alerts">
                 <?php require __DIR__ . '/alerts.php'; ?>
             </div>

@@ -1,6 +1,6 @@
 
 section.auth-home {
-  min-width: 100vw;
+  width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -51,4 +51,9 @@ section.auth-home form {
 
 section.auth-home sl-tab::part(base) {
   color: var(--color-primary-1);
+}
+
+section.auth-home sl-tab::part(base):host {
+  --indicator-color: var(--color-white);
+
 }

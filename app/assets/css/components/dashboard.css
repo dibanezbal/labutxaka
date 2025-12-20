@@ -1,0 +1,93 @@
+section.dashboard-movimientos__wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas:
+    "saldo-total balance gasto-mas-mes"
+    "ultimos-movimientos ultimos-movimientos gastos-por-categoria";
+    gap: 20px;
+}
+
+#saldo-total {
+    grid-area: saldo-total;
+}
+
+#balance {
+    grid-area: balance;
+}
+
+#gasto-mas-mes {
+    grid-area: gasto-mas-mes;
+}
+
+#ultimos-movimientos {
+    grid-area: ultimos-movimientos;
+    grid-column: span 2;
+}
+
+#gastos-por-categoria {
+    grid-area: gastos-por-categoria;
+}
+
+#gastos-por-categoria h3.categoria-title {
+    color: var(--color-primary-2)
+}
+
+#gastos-por-categoria .categoria-list {
+    padding: var(--sl-spacing-large);
+}
+
+#gastos-por-categoria ul {
+    margin-top: 20px;
+}
+
+#gastos-por-categoria a {
+    text-decoration: none;
+    color: var(--color-primary);
+    font-weight: var(--font-weight-bold);
+}
+
+#gastos-por-categoria ul li.categoria-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 13px;
+    color: var(--color-primary-2);
+    font-weight: var(--font-weight-bold);
+}
+
+#gastos-por-categoria ul li.categoria-item span.categoria-valor {
+    color: var(--color-red);
+}
+
+.card-list__lista-movimientos.card-list__lista-movimientos--resumen,
+#gastos-por-categoria .categoria-list {
+    min-height: 300px;
+}
+
+@media (max-width: 1200px) {
+    section.dashboard-movimientos__wrapper {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+        "saldo-total"
+        "balance"
+        "gasto-mas-mes"
+        "ultimos-movimientos"
+        "gastos-por-categoria";
+        min-width: 0;
+    }
+}
+
+@media (max-width: 768px) {
+  section.dashboard-movimientos__wrapper {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+        "saldo-total"
+        "balance"
+        "gasto-mas-mes"
+        "gastos-por-categoria"
+        "ultimos-movimientos"
+  }
+
+  #ultimos-movimientos {
+    grid-column: span 1;
+  }
+}

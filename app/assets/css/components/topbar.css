@@ -1,0 +1,43 @@
+.layout-topbar {
+  margin-bottom: 30px;
+  display: flex; 
+  justify-content: flex-end; 
+  align-items: center; 
+  gap: 16px; 
+}
+
+@media (max-width: 768px) {
+	.topbar {
+		width: 100%;
+		height: 50px;
+		background-color: var(--color-primary-2);
+	}
+
+	sl-drawer.drawer-placement-top::part(panel) {
+		height: 100vh;
+		background-color: var(--color-primary);
+	}
+
+	sl-drawer .sidebar {
+		height: 80%;
+	}
+
+	sl-drawer::part(close-button) {
+		color: var(--color-primary-1);
+		font-size: var(--font-size-xl);
+	}
+
+	sl-drawer::part(header) {
+		height: 80px;
+	}
+
+	sl-drawer::part(body) {
+		padding: 0;
+	}
+
+	header.layout-topbar {
+		justify-content: space-between;
+		flex-direction: row-reverse;
+		align-items: center;
+	}
+}

@@ -15,7 +15,7 @@ class UsuariosController {
     $_SESSION['user_name']  = ($usuario['usuario'] ?? '');
     $_SESSION['user_email'] = ($usuario['email'] ?? '');
     
-    header('Location: index.php');
+    header('Location: index.php?c=movimientos&a=resumen');
   }
 
   public function signup() {
@@ -29,10 +29,16 @@ class UsuariosController {
       header('Location: index.php?c=usuarios&a=index&error=signup'); return;
     }
     $userId = (new UsuariosModel())->create($usuario, $email, $password, $fecha_registro);
+    if (!$userId) {
+      header('Location: index.php?c=usuarios&a=index&error=signup');
+      exit;
+    }
 
-    $_SESSION['user_id'] = $userId;
-    $_SESSION['user_name'] = $usuario;
-    header('Location: resumen.php');
+    $_SESSION['user_id']    = $userId;
+    $_SESSION['user_name']  = $usuario;
+    $_SESSION['user_email'] = $email;
+
+    header('Location: index.php?c=movimientos&a=resumen');
   }
 
   public function logout() {

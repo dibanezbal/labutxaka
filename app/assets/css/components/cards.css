@@ -1,12 +1,12 @@
 button.card-basic {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    text-align: left;
-    border: 1px solid #ccc;
-    background: none;
-    padding: 15px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: left;
+  border: 1px solid #ccc;
+  background: none;
+  padding: 15px;
 }
 
 
@@ -20,7 +20,6 @@ span.font-ingreso {
   font-weight: var(--font-weight-bold);
 }
 
-
 .mov-card {
   color: var(--color-primary-2)
 }
@@ -28,12 +27,30 @@ span.font-ingreso {
 .mov-card:not(.mov-card--resumen){
   border-radius: var(--sl-border-radius-large);
   background: var(--color-white);
+  padding: var(--sl-spacing-extra-small);
 }
 
-.mov-card:not(.mov-card--resumen):hover {
-  box-shadow: var(--sl-shadow-large);
+.mov-card:hover {
   background-color: var(--color-secondary-1);
 }
+
+.mov-card.mov-card--resumen {
+  padding: var(--sl-spacing-small) var(--sl-spacing-medium); 
+  font-size: var(--font-size-sm);
+}
+
+.mov-card.mov-card--resumen .mov-card__row {
+  display: grid;
+  grid-template-columns:
+    1fr  /* fecha */
+    1fr  /* categoría */
+    1fr  /* comentario */
+    1fr  /* cuenta */
+    1fr; /* cantidad */
+  align-items: center;
+  gap: 14px;
+}
+
 
 .mov-card--selected:hover {
   box-shadow: var(--sl-shadow-x-large);
@@ -49,29 +66,29 @@ span.font-ingreso {
   display: grid;
   grid-template-columns:
     20px         /* checkbox */
-    100px        /* fecha */
-    160px          /* categoría */
-    1fr          /* comentario */
-    200px        /* cuenta */
-    60px        /* tipo registro */
-    90px;       /* cantidad */
+    1fr        /* fecha */
+    1fr          /* categoría */
+    2fr          /* comentario */
+    1fr        /* cuenta */
+    1fr        /* tipo registro */
+    1fr;       /* cantidad */
   align-items: center;
   gap: 14px;
+  min-width: 0;
 }
 
 .mov-card.mov-card--resumen .mov-card__body .mov-card__row {
   display: grid;
   grid-template-columns:
-    100px        /* fecha */
-    160px          /* categoría */
+    1fr        /* fecha */
+    1fr          /* categoría */
     1fr          /* comentario */
-    200px        /* cuenta */
-    90px;       /* cantidad */
+    1fr        /* cuenta */
+    1fr;       /* cantidad */
   align-items: center;
   gap: 14px;
 }
 
-/* Columna fija: evita que la cantidad salte */
 .mov-card__amount {
   justify-self: end;
   font-weight: 600;
@@ -92,26 +109,25 @@ span.font-ingreso {
   font-weight: var(--font-weight-bold);
 }
 
-/* Accesibilidad y click */
 .mov-card--clickable { cursor: pointer; }
 
 .mov-card__content {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 150px;
-    text-align: left;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 150px;
+  text-align: left;
 }
 
 .mov-card__content>span {
-    display: block;
-    width: 250px;
+  display: block;
+  width: 250px;
 }
 
 .mov-card__details {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .mov-card__account {
@@ -127,4 +143,156 @@ span.font-ingreso {
 .mov-card.mov-card--clickable.mov-card--selected {
   background-color: var(--color-secondary);
   color: var(--color-primary-2);
+}
+
+ul.card-list__cuentas li sl-icon {
+  font-size: var(--font-size-xl);
+  color: var(--color-primary-2);
+  z-index: 100;
+}
+
+ul.card-list__cuentas li.small-card__cuentas {
+  margin-right: var(--sl-spacing-medium);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-primary-2);
+  padding: var(--sl-spacing-small);
+  border-radius: var(--sl-border-radius-large);
+  color: var(--color-primary-1);
+}
+
+ul.card-list__cuentas li span.icon-wrapper {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: var(--color-primary-1);
+}
+
+ul.card-list__cuentas a {
+  text-decoration: none;
+}
+
+ul.card-list__cuentas li.small-card__cuentas .small-card__content {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin-left: 15px;
+}
+
+ul.card-list__cuentas li span.small-card__saldo {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.small-card.small-card--white {
+  background-color: var(--color-white);
+  border-radius: var(--sl-border-radius-large);
+
+  padding: var(--sl-spacing-medium);
+}
+
+.small-card.small-card--white:hover {
+  box-shadow: var(--sl-shadow-large);
+}
+
+.small-card.small-card--white .small-card__title {
+  font-size: var(--font-size-md);
+  margin-bottom: var(--sl-spacing-small);
+  color: var(--color-primary-2)
+}
+
+.small-card__content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 var(--sl-spacing-small);
+}
+
+#gasto-mas-mes .small-card__content {
+  justify-content: flex-start;
+}
+
+.small-card.small-card--white .small-card__content .icon-wrapper {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: var(--color-primary-1);
+  color: var(--color-primary-2);
+  margin-right: var(--sl-spacing-medium);
+}
+
+.small-card.small-card--white .small-card__content sl-icon {
+  font-size: var(--font-size-2xl);
+}
+
+.small-card.small-card--white .small-card__content p.saldo-total {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary-2)
+}
+
+.small-card__content .small-card__balance-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 60px;
+  width: 100%;
+  margin-left: 20px;
+}
+
+.small-card__content .small-card__balance-section-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+
+.mov-card.mov-card--resumen .mov-card__row.mov-card__row--mobile--bottom{
+  display: none;
+} 
+
+@media (max-width: 768px) {
+  .mov-card:not(.mov-card--resumen) .mov-card__row {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--font-size-base);
+  }
+
+  .group_categoria-comentario, 
+  .group_tipo-cuenta,
+   {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mov-card.mov-card--resumen .mov-card__row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .mov-card.mov-card--resumen {
+    display: flex;
+    flex-direction: column;
+    font-size: var(--font-size-sm);
+  }
+
+  .mov-card__row.mov-card__row--mobile--bottom {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .mov-card .mov-card__row input {
+    display: none;
+  }
 }
