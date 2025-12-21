@@ -1,3 +1,5 @@
+/* Maquetación/Estructuras del dashboard de la página de resumen */
+
 section.dashboard-movimientos__wrapper {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

@@ -1,3 +1,5 @@
+/* Maquetación/Estructura de los listados de movimientos */
+
 .card-list__lista-movimientos:not(.card-list__lista-movimientos--resumen) {
     display: grid;
     gap: 8px;

@@ -1,24 +1,4 @@
-button.card-basic {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  text-align: left;
-  border: 1px solid #ccc;
-  background: none;
-  padding: 15px;
-}
-
-
-span.font-gasto {
-  color: var(--color-red);
-  font-weight: var(--font-weight-bold);
-}
-
-span.font-ingreso {
-  color: var(--color-primary-2);
-  font-weight: var(--font-weight-bold);
-}
+/* Cards: Estilos para las tarjetas que muestran la info de los movimientos y las cuentas. */
 
 .mov-card {
   color: var(--color-primary-2)
@@ -50,7 +30,6 @@ span.font-ingreso {
   align-items: center;
   gap: 14px;
 }
-
 
 .mov-card--selected:hover {
   box-shadow: var(--sl-shadow-x-large);
@@ -93,6 +72,28 @@ span.font-ingreso {
   justify-self: end;
   font-weight: 600;
 }
+
+button.card-basic {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: left;
+  border: 1px solid #ccc;
+  background: none;
+  padding: 15px;
+}
+
+span.font-gasto {
+  color: var(--color-red);
+  font-weight: var(--font-weight-bold);
+}
+
+span.font-ingreso {
+  color: var(--color-primary-2);
+  font-weight: var(--font-weight-bold);
+}
+
 .font-gasto  { color: var(--color-red); }
 .font-ingreso{ color: var(--color-primary-2); }
 

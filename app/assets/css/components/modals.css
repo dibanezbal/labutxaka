@@ -1,3 +1,5 @@
+/* Modals: Estilos para los modales que contienen los fomularios para crear movimientos y editarlos. */
+
 sl-button.form__button--submit::part(base) {
     background-color: var(--color-primary);
     color: var(--color-secondary);

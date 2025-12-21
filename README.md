@@ -1,6 +1,6 @@
 # labutxaka
 
-Aplicación web en PHP (MVC) para gestionar **movimientos**, **cuentas** y **categorías**, con un panel de **resumen**. UI basada en **Shoelace** y estilos propios.
+Aplicación web en PHP (MVC) para gestionar el control de gastos e ingresos a través de **movimientos**, **cuentas** y **categorías**, con un panel de **resumen**. La UI basada en **Shoelace** y estilos propios.
 
 ## Estructura del proyecto
 
@@ -24,7 +24,7 @@ Aplicación web en PHP (MVC) para gestionar **movimientos**, **cuentas** y **cat
 
 ## Configuración
 
-### 1 Configuración de la base de datos
+### Configuración de la base de datos
 
 Configurar las credenciales en:
 
@@ -33,7 +33,7 @@ Configurar las credenciales en:
 
 > Nota: el proyecto usa MySQLi y modelos que llaman a la conexión desde la capa `config`.
 
-### 2 Base de datos
+### Base de datos
 
 Crea la base de datos y tablas necesarias (usuarios, cuentas, categorías, movimientos).  
 El proyecto asume relaciones por `usuario_id` y claves foráneas (p. ej. movimientos > usuarios).
@@ -89,6 +89,9 @@ El router funciona con query params (?key=value):
 
 ### Frontend
 - Los componentes se han basado en Shoelace `sl-*` (inputs, dialogs, buttons) enlazando a través de CDN y personalizándolos para este proyecto.
+
+### Imágenes e iconos
+- Basados en Figma y en librerías como la propia Shoelace o 
 
 
 ### La estructura del MVC está basada en las plantillas de estos repositorios:

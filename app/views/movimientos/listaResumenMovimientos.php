@@ -1,22 +1,26 @@
+<!-- Listado de movimientos para la página de resumen (inicio) -->
 <section class="card-list__lista-movimientos card-list__lista-movimientos--resumen">
     <div class="card-list__header--resumen">
         <h3>Últimos movimientos</h3>
         <a href="index.php?c=movimientos&a=index">Ver más movimientos ></a>
     </div>
 
-    <!-- Un único modal para editar (fuera del foreach) -->
+    <!-- Abrimos un modal para editar movimientos desde el resumen, sin necesitar botón -->
     <sl-dialog id="edit-dialog" label="Editar movimiento">
         <div id="edit-dialog-content"></div>
     </sl-dialog>
 
+    <!-- Si no hay movimientos, mostramos un mensaje -->
     <?php if (empty($movimientos)) : ?>
     <p class="no-data-message">No hay movimientos registrados.</p>
     <?php endif; ?>
 
+    <!-- Mostramos hasta 10 movimientos recientes -->
     <?php $i = 0;
-  foreach (($movimientos ?? []) as $m) :
+    foreach (($movimientos ?? []) as $m) :
     if ($i++ === 10) break;
 
+    // Formateamos los datos para mostrar
     $fecha = !empty($m['fecha_registro']) ? date('d/m/Y', strtotime($m['fecha_registro'])) : '';
     $cantidadStyle  = ($m['tipo_movimiento'] ?? '') === 'Gasto' ? 'font-gasto' : 'font-ingreso';
     $cantidadSymbol = ($m['tipo_movimiento'] ?? '') === 'Gasto' ? '-' : '+';
@@ -48,6 +52,7 @@
             </span>
         </div>
 
+        <!-- Mostrar la cuenta y la cantidad en otra fila sólo para mobile -->
         <div class="mov-card__row mov-card__row--mobile--bottom">
             <span class="mov-card__account mov-card__account--mobile">
                 <sl-icon class="mov-card__icon" name="<?= htmlspecialchars($icon_cuenta) ?>"></sl-icon>

@@ -2,6 +2,8 @@
 require_once __DIR__ . '/../models/UsuariosModel.php';
 
 class UsuariosController {
+
+  // Método para mostrar el formulario de inicio de sesión
   public function index() {
     require __DIR__ . '/../views/usuarios/login.php';
   }
@@ -18,6 +20,8 @@ class UsuariosController {
     header('Location: index.php?c=movimientos&a=resumen');
   }
 
+  // Método para mostrar el formulario de registro.
+  
   public function signup() {
     $usuario = trim($_POST['usuario'] ?? '');
     $email = trim($_POST['email'] ?? '');
@@ -41,6 +45,7 @@ class UsuariosController {
     header('Location: index.php?c=movimientos&a=resumen');
   }
 
+  // Método para cerrar sesión. 
   public function logout() {
     session_destroy();
     header('Location: index.php?c=usuarios&a=index');

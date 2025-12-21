@@ -1,3 +1,5 @@
+/* Personalización de los botones */
+
 sl-button.btn-edit::part(base){
     background-color: var(--color-primary);
     color: var(--color-primary-1);

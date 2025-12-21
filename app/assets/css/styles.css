@@ -101,7 +101,7 @@ textarea:not([rows]) {
 :root {
 
   /* Definición de variables CSS de LaButxaka */
-  /* Colors */
+  /* Colores */
   --color-primary: #38803A;
   --color-primary-1: #EDF7ED;
   --color-primary-2: #275928;
@@ -123,7 +123,7 @@ textarea:not([rows]) {
   --color-black: #0C0D0C;
   --color-lilac: #80387D;
 
-  /* Typography */
+  /* Tipografía */
   --font-family-base: 'Inter', sans-serif;
   --font-size-base: 12px;
   --font-size-xs: 10px;
@@ -142,15 +142,7 @@ textarea:not([rows]) {
   --sl-color-primary-700: var(--color-primary-2);
   --sl-color-secondary-500: var(--color-secondary);
   --sl-color-secondary-600: var(--color-secondary-2);
-
 }
-
-h1 {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-primary-2);
-}
-
 
 .layout { 
   display: grid; 
@@ -163,7 +155,6 @@ h1 {
   background-color: var(--color-primary-1);
   width: 100%;
 }
-
 
 header.layout-topbar {
   grid-area: header;
@@ -185,7 +176,6 @@ main.layout-content {
   min-width: 0;
 }
 
-
 body#categorias main.layout-content ul,
 body#cuentas main.layout-content ul { 
   margin-top: 20px;
@@ -202,6 +192,12 @@ body#cuentas main.layout-content ul li {
 
 .content { padding: 16px; }
 .movimientos-container { max-width: 100%; margin: 20px auto; }
+
+h1 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary-2);
+}
 
 p.no-data-message {
   font-size: var(--font-size-xl);

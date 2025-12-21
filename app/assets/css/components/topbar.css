@@ -1,3 +1,5 @@
+/* Topbar: Barra con botón de agregar nuevo registro/movimiento y cerrar sesión */
+
 .layout-topbar {
   margin-bottom: 30px;
   display: flex; 
