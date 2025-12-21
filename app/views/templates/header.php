@@ -9,7 +9,9 @@ $pageId = $c . '-' . $a;
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= htmlspecialchars($titulo ?? 'Labutxaka'); ?></title>
+    <title><?= htmlspecialchars($titulo ?? 'Labutxaka'); ?>LaButxaka</title>
+    <link rel="shortcut icon" href="/app/assets/img/favicon.ico" type="image/x-icon">
+
 
     <!-- Shoelace -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.10.0/cdn/themes/light.css" />

@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="app/assets/css/styles.css">
+<link rel="shortcut icon" href="/app/assets/img/favicon.ico" type="image/x-icon">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Shoelace -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.10.0/cdn/themes/light.css" />
