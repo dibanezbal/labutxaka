@@ -4,8 +4,8 @@ Aplicación web en PHP (MVC) para gestionar **movimientos**, **cuentas** y **cat
 
 ## Estructura del proyecto
 
-- `index.php`: entrypoint (raíz del proyecto)
-- `app/index.php`: bootstrap interno
+- `index.php`: raíz del proyecto
+- `app/index.php`: arranque interno
 - `app/core/routes.php`: router (`?c=...&a=...`)
 - `app/controllers/`: controladores
 - `app/models/`: modelos (MySQLi)
@@ -17,10 +17,9 @@ Aplicación web en PHP (MVC) para gestionar **movimientos**, **cuentas** y **cat
 ## Requisitos
 
 - PHP 8.x
-- MySQL/MariaDB
+- MySQL
 - Extensiones PHP:
   - `mysqli`
-  - `mbstring` (recomendado)
 - Servidor web (Apache/Nginx) o PHP built-in server
 
 ## Configuración
@@ -41,19 +40,15 @@ El proyecto asume relaciones por `usuario_id` y claves foráneas (p. ej. movimie
 
 ## Ejecutar en local
 
-Desde la raíz del proyecto:
+Desde la raíz del proyecto, según el puerto que tengas configurado:
 
 ```
 php -S localhost:8000
 ```
 
-o 
-
 ```
 php -S localhost:8888
 ```
-
-
 Luego abre:
 
 - http://localhost:8000/
@@ -61,7 +56,7 @@ Luego abre:
 
 ## Rutas principales
 
-El router funciona con query params:
+El router funciona con query params (?key=value):
 
 - Login/Registro:
   - `index.php?c=usuarios&a=login`
@@ -79,13 +74,11 @@ El router funciona con query params:
 - Categorías:
   - `index.php?c=categorias&a=index`
 
-## Frontend (Shoelace)
-
-Se usan componentes de Shoelace `sl-*` (inputs, dialogs, buttons).  
-
 ## Desarrollo
 
 ### Estilos
+- Los estilos están separados en varios archivos por componente o funcionalidad, importándolos en styles.css, con la estructura del layout y el reset basado en: https://piccalil.li/blog/a-modern-css-reset/:
+
 - CSS principal: `app/assets/css/styles.css`
 - Componentes: `app/assets/css/components/*.css`
 
@@ -93,12 +86,17 @@ Se usan componentes de Shoelace `sl-*` (inputs, dialogs, buttons).
 - Script general: `app/assets/js/script.js`
 - Componentes: `app/assets/js/components/*.js`
 
+
+### Frontend
+- Los componentes se han basado en Shoelace `sl-*` (inputs, dialogs, buttons) enlazando a través de CDN y personalizándolos para este proyecto.
+
+
 ### La estructura del MVC está basada en las plantillas de estos repositorios:
 - https://github.com/informaticacba/plantilla-mvc-php/tree/master/mvc
 - https://github.com/ivalshamkya/php-pdo-mvc/
 
 
-###
+## Comentarios
 - Proyecto 3. Aplicación interactiva
 - Grado en Técnicas de Interacción Digital y Multimedia - UOC
 - Diciembre 2025
