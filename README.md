@@ -93,13 +93,12 @@ Se usan componentes de Shoelace `sl-*` (inputs, dialogs, buttons).
 - Script general: `app/assets/js/script.js`
 - Componentes: `app/assets/js/components/*.js`
 
-###
-- La estructura del MVC está basada en las plantillas de estos repositorios:
-https://github.com/informaticacba/plantilla-mvc-php/tree/master/mvc
-https://github.com/ivalshamkya/php-pdo-mvc/
+### La estructura del MVC está basada en las plantillas de estos repositorios:
+- https://github.com/informaticacba/plantilla-mvc-php/tree/master/mvc
+- https://github.com/ivalshamkya/php-pdo-mvc/
 
 
 ###
-# Proyecto 3. Aplicación interactiva
-# Grado en Técnicas de Interacción Digital y Multimedia - UOC
-# Diciembre 2025
+- Proyecto 3. Aplicación interactiva
+- Grado en Técnicas de Interacción Digital y Multimedia - UOC
+- Diciembre 2025
