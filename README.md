@@ -7,7 +7,8 @@ Conserva la identidad visual y las secciones Resumen, Movimientos, Cuentas y Cat
 del proyecto PHP. No incluye deudas, división de gastos, login ni conexión bancaria.
 
 - Los datos iniciales son ficticios; las fechas se adaptan al mes actual.
-- Permite crear, editar y eliminar movimientos, cuentas y categorías, y filtrar movimientos.
+- Permite crear, editar y eliminar movimientos, y consultar u ordenar los movimientos de otro mes.
+- Cuentas y Categorías son listados de consulta. El Resumen muestra el mes actual sin selector de periodo.
 - Los cambios permanecen solo en memoria durante la visita. Recargar o reiniciar recupera la semilla.
 - No envía los datos introducidos a un backend ni los guarda en el navegador.
 - Shoelace y la fuente se descargan desde sus CDN, por lo que necesitan conexión.
@@ -150,7 +151,7 @@ El router funciona con query params (?key=value):
 - Los componentes se han basado en Shoelace `sl-*` (inputs, dialogs, buttons) enlazando a través de CDN y personalizándolos para este proyecto.
 
 ### Imágenes e iconos
-- Basados en Figma y en librerías como la propia Shoelace o 
+- Basados en Figma y en librerías como la propia Shoelace
 
 
 ### La estructura del MVC está basada en las plantillas de estos repositorios:
