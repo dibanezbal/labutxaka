@@ -18,7 +18,7 @@
 </sl-dialog>
 <sl-dropdown class="only-desktop">
     <sl-button slot="trigger" variant="text" class="topbar-username" pill>
-        <sl-icon src="app/assets/img/perfil.svg" slot="prefix" style="font-size: 3rem;"></sl-icon>
+        <sl-icon src="/app/assets/img/perfil.svg" slot="prefix" style="font-size: 3rem;"></sl-icon>
     </sl-button>
     <sl-menu>
         <sl-menu-item disabled>

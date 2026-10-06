@@ -16,7 +16,6 @@ class MovimientosController
 	// Muestra el resumen de movimientos, cuentas y categorías -- Página de inicio. 
 	public function resumen() {
 		$titulo = "Resumen";
-
 		$movimientos = $this->model->getAllMovimientosByUser($_SESSION['user_id'] ?? null);
 		$cuentas = $this->model->getCuentas();
 		$categorias = $this->model->getCategorias();
@@ -40,7 +39,34 @@ class MovimientosController
 
 	// Muestra la lista de movimientos sin plantilla -- Valorar fusionar ambos métodos index y listaMovimientos.
 	public function listaMovimientos() {
-		$movimientos = $this->model->getAllMovimientosByUser($_SESSION['user_id'] ?? null);
+		$userId = (int)($_SESSION['user_id'] ?? 0);
+		if (!$userId) { http_response_code(401); echo 'No autenticado'; return; }
+
+		$filters = [];
+		if (!empty($_GET['mes'])) {
+			$filters['mes'] = (string)$_GET['mes'];
+		}
+		if (!empty($_GET['cuenta_id']) && ctype_digit((string)$_GET['cuenta_id'])) {
+			$filters['cuenta_id'] = (int)$_GET['cuenta_id'];
+		}
+		if (!empty($_GET['categoria_id']) && ctype_digit((string)$_GET['categoria_id'])) {
+			$filters['categoria_id'] = (int)$_GET['categoria_id'];
+		}
+		if (!empty($_GET['tipo_movimiento'])) {
+			$allowed = ['Ingreso','Gasto','Transferencia'];
+			$tm = (string)$_GET['tipo_movimiento'];
+			if (in_array($tm, $allowed, true)) $filters['tipo_movimiento'] = $tm;
+		}
+		if (!empty($_GET['tipo_registro'])) {
+			$allowed = ['Fijo','Variable'];
+			$tr = (string)$_GET['tipo_registro'];
+			if (in_array($tr, $allowed, true)) $filters['tipo_registro'] = $tr;
+		}
+		if (!empty($_GET['q'])) {
+			$filters['q'] = mb_substr((string)$_GET['q'], 0, 100);
+		}
+
+		$movimientos = $this->model->getMovimientosByUserFiltered($userId, $filters);
 		$cuentas = $this->model->getCuentas();
 		$categorias = $this->model->getCategorias();
 

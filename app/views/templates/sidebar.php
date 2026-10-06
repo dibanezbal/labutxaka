@@ -9,9 +9,9 @@ $activePage = fn(string $controller, string $action = 'index') =>
 
 <div class="sidebar">
     <a class="sidebar-title logo-desktop" href="index.php?c=movimientos&a=resumen"><img
-            src="app/assets/img/logo_amarillo_vertical.svg" alt=""></a>
+        src="/app/assets/img/logo_amarillo_vertical.svg" alt=""></a>
     <a class="sidebar-title logo-mobile" href="index.php?c=movimientos&a=resumen"><img
-            src="app/assets/img/logo_amarillo_horizontal.svg" alt=""></a>
+        src="/app/assets/img/logo_amarillo_horizontal.svg" alt=""></a>
     <nav class="sidebar-nav">
         <a class="sidebar-link <?= $activePage('movimientos', 'resumen') ?>" href="index.php?c=movimientos&a=resumen">
             <sl-icon name="list-check"></sl-icon>

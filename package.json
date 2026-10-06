@@ -1,0 +1,11 @@
+{
+  "name": "labutxaka-demo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-demo.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "start": "node scripts/serve-demo.mjs"
+  },
+  "engines": { "node": ">=22" }
+}

@@ -2,6 +2,19 @@
 
 <?php
 
+// Categorías a excluir en gráficos/listados de gastos por categoría (p. ej. transferencias internas)
+// Puedes añadir más IDs aquí.
+$categoriasExcluidasIds = [25, 26];
+
+// Categorías a excluir SOLO en el bloque "Gastos por categoría".
+// Útil si aquí quieres ocultar más cosas sin afectar a otros cálculos.
+$categoriasExcluidasGastosPorCategoriaIds = [25, 26];
+
+// Categorías a excluir SOLO en el bloque "Balance".
+// Si quieres excluir por igual en ingresos y gastos, pon los mismos IDs en ambos.
+$categoriasExcluidasBalanceIngresosIds = [25, 26];
+$categoriasExcluidasBalanceGastosIds = [25, 26];
+
 $saldoPorCuenta = [];
 $ultimo_mes_registro = date('m');
 
@@ -34,7 +47,7 @@ foreach ($movimientos as $m) {
       $icon_cuenta = 'credit-card-2-back';
       if (($cuenta['nombre'] ?? '') === 'Efectivo') {
         $icon_cuenta = 'coin';
-      } elseif (($cuenta['nombre'] ?? '') === 'Ahorro') {
+      } elseif (($cuenta['nombre'] ?? '') !== 'Efectivo' && stripos($cuenta['nombre'] ?? '', 'ahorro') !== false) {
         $icon_cuenta = 'piggy-bank';
       }
       $saldoActual = $saldoPorCuenta[$cuenta['id']] ?? 0.0;
@@ -42,7 +55,7 @@ foreach ($movimientos as $m) {
       $saldoFmt = number_format($saldoActual, 2, ',', '.');
     ?>
         <a href="index.php?c=cuentas&a=index" ; ?>
-            <li class="small-card__cuentas" value=" <?= $cuenta['id']; ?>">
+            <li id="cuenta-<?= $cuenta['id']; ?>" class="small-card__cuentas" value=" <?= $cuenta['id']; ?>">
 
                 <span class="icon-wrapper">
                     <sl-icon name="<?= $icon_cuenta ?>"></sl-icon>
@@ -82,7 +95,7 @@ foreach ($movimientos as $m) {
 
         <div class="small-card__content">
             <span class="icon-wrapper">
-                <sl-icon src="app/assets/img/scale.svg"></sl-icon>
+                <sl-icon src="/app/assets/img/scale.svg"></sl-icon>
             </span>
 
             <div class="small-card__balance-section">
@@ -91,10 +104,20 @@ foreach ($movimientos as $m) {
 
                     <?php
               $sumaIngresos = 0.0;
+              $mesActualBalance = date('Y-m');
               foreach ($movimientos as $m) 
                 {
                   $tipo = strtolower($m['tipo_movimiento'] ?? '');
-                  $cantidad = ($m['cantidad'] ?? 0);
+                  $fecha = $m['fecha_registro'] ?? null;
+                  if (!$fecha || date('Y-m', strtotime($fecha)) !== $mesActualBalance) {
+                    continue;
+                  }
+
+                  if (in_array((int)($m['categoria_id'] ?? 0), $categoriasExcluidasBalanceIngresosIds, true)) {
+                    continue;
+                  }
+
+                  $cantidad = (float)($m['cantidad'] ?? 0);
                   if ($tipo === 'ingreso') {
                     $sumaIngresos += $cantidad;
                   }
@@ -109,9 +132,19 @@ foreach ($movimientos as $m) {
                     <p>Gastos</p>
                     <?php
             $sumaGastos = 0.0;
+            $mesActualBalance = date('Y-m');
             foreach ($movimientos as $m) {
               $tipo = strtolower($m['tipo_movimiento'] ?? '');
-              $cantidad = ($m['cantidad'] ?? 0);
+              $fecha = $m['fecha_registro'] ?? null;
+              if (!$fecha || date('Y-m', strtotime($fecha)) !== $mesActualBalance) {
+                continue;
+              }
+
+              if (in_array((int)($m['categoria_id'] ?? 0), $categoriasExcluidasBalanceGastosIds, true)) {
+                continue;
+              }
+
+              $cantidad = (float)($m['cantidad'] ?? 0);
               if ($tipo === 'gasto') {
                 $sumaGastos += $cantidad;
               }
@@ -141,6 +174,10 @@ foreach ($movimientos as $m) {
             foreach (($movimientos ?? []) as $m) {
               $tipo = strtolower($m['tipo_movimiento'] ?? '');
               if ($tipo !== 'gasto') {
+                continue;
+              }
+
+              if (in_array((int)($m['categoria_id'] ?? 0), $categoriasExcluidasIds, true)) {
                 continue;
               }
 
@@ -186,16 +223,26 @@ foreach ($movimientos as $m) {
     </div>
 
     <div id="gastos-por-categoria">
-        <a href="index.php?c=categorias&a=index">
+        <a href="index.php?c=movimientos&a=index">
             <div class="small-card small-card--white categoria-list">
                 <h3 class="categoria-title">Gastos por categoría</h3>
                 <ul>
                     <?php 
             $gastosPorCategoria = [];
+            $mesActualCategorias = date('Y-m');
 
             foreach ($movimientos as $m) {
               $tipo = strtolower($m['tipo_movimiento'] ?? '');
               if ($tipo !== 'gasto') continue;
+
+              $fecha = $m['fecha_registro'] ?? null;
+              if (!$fecha || date('Y-m', strtotime($fecha)) !== $mesActualCategorias) {
+                continue;
+              }
+
+              if (in_array((int)($m['categoria_id'] ?? 0), $categoriasExcluidasGastosPorCategoriaIds, true)) {
+                continue;
+              }
 
               $categoria = (string)($m['categoria_nombre'] ?? 'Sin categoría');
               $cantidad  = (float)($m['cantidad'] ?? 0);

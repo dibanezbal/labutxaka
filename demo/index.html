@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="LaButxaka: demo interactiva de gestión de gastos e ingresos con datos ficticios.">
+  <meta name="theme-color" content="#38803a">
+  <title>LaButxaka | Demo</title>
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.10.0/cdn/themes/light.css">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="stylesheet" href="/fidelity.css">
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.10.0/cdn/shoelace.js"></script>
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Saltar al contenido</a>
+  <div class="layout">
+    <aside class="layout-sidebar">
+      <div class="sidebar">
+        <a class="sidebar-title logo-desktop" href="#resumen" aria-label="LaButxaka, resumen"><img src="/assets/img/logo_amarillo_vertical.svg" alt="LaButxaka"></a>
+        <nav class="sidebar-nav" aria-label="Navegación principal">
+          <a class="sidebar-link" href="#resumen"><sl-icon name="list-check" aria-hidden="true"></sl-icon><span>Resumen</span></a>
+          <a class="sidebar-link" href="#movimientos"><sl-icon name="cash-coin" aria-hidden="true"></sl-icon><span>Movimientos</span></a>
+          <a class="sidebar-link" href="#cuentas"><sl-icon name="wallet2" aria-hidden="true"></sl-icon><span>Cuentas</span></a>
+          <a class="sidebar-link" href="#categorias"><sl-icon name="list-stars" aria-hidden="true"></sl-icon><span>Categorías</span></a>
+        </nav>
+      </div>
+    </aside>
+    <header class="layout-topbar">
+      <sl-drawer id="navigation-drawer" placement="top" class="drawer-placement-top" label="LaButxaka">
+        <div class="sidebar"><a class="sidebar-title logo-mobile" href="#resumen"><img src="/assets/img/logo_amarillo_horizontal.svg" alt="LaButxaka"></a><nav class="sidebar-nav" id="mobile-navigation" aria-label="Navegación móvil"></nav><div class="sidebar-footer"><p class="sidebar-footer-user"><sl-icon name="person-circle"></sl-icon>Usuario demo</p><button type="button" class="quiet-button" data-reset>Reiniciar demo</button></div></div>
+      </sl-drawer>
+      <sl-button id="open-navigation" variant="text" class="only-mobile" aria-label="Abrir menú"><sl-icon name="list" label="Menú"></sl-icon></sl-button>
+      <span class="demo-badge">Demo · Datos ficticios</span>
+      <sl-button id="create" class="btn btn-open-modal primary-button" variant="primary" size="medium" pill><sl-icon name="plus-lg"></sl-icon> Registro</sl-button>
+      <sl-dropdown class="only-desktop">
+        <sl-button slot="trigger" variant="text" class="topbar-username" aria-label="Usuario demo"><sl-icon src="/assets/img/perfil.svg" slot="prefix"></sl-icon></sl-button>
+        <sl-menu><sl-menu-item disabled>Usuario demo</sl-menu-item><sl-menu-item id="reset" data-reset><sl-icon name="arrow-counterclockwise" slot="prefix"></sl-icon>Reiniciar demo</sl-menu-item></sl-menu>
+      </sl-dropdown>
+    </header>
+    <main class="layout-content" id="main" tabindex="-1">
+      <h1 id="page-title">Resumen</h1>
+      <div id="view"></div>
+    </main>
+  </div>
+  <sl-dialog id="editor" label="Nuevo registro">
+    <form id="editor-form">
+      <div id="form-fields"></div>
+      <p id="form-error" class="form-error" role="alert"></p>
+      <button id="delete-edited" type="button" class="icon-button" hidden title="Eliminar" aria-label="Eliminar registro"><sl-icon name="trash3" aria-hidden="true"></sl-icon></button>
+      <div class="form__buttons"><sl-button type="button" class="form__button--cancel" variant="default" size="medium" pill data-close>Cancelar</sl-button><sl-button type="submit" class="form__button--submit" variant="primary" size="medium" pill>Guardar</sl-button></div>
+    </form>
+  </sl-dialog>
+  <dialog id="confirmation" aria-labelledby="confirmation-title">
+    <form id="confirmation-form">
+      <h2 id="confirmation-title">¿Eliminar este elemento?</h2>
+      <p id="confirmation-text"></p>
+      <div class="dialog-actions"><button type="button" class="quiet-button" id="cancel-confirmation">Cancelar</button><button type="submit" class="primary-button" id="confirm-action">Eliminar</button></div>
+    </form>
+  </dialog>
+  <p id="status" role="status" aria-live="polite"></p>
+</body>
+</html>

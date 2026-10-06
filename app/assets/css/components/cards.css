@@ -163,6 +163,24 @@ ul.card-list__cuentas li.small-card__cuentas {
   color: var(--color-primary-1);
 }
 
+ul.card-list__cuentas li#cuenta-1 {
+  background-color: var(--color-lilac);
+}
+
+ul.card-list__cuentas li#cuenta-2,
+ul.card-list__cuentas li#cuenta-5 {
+  background-color: #db5908;
+}
+
+ul.card-list__cuentas li#cuenta-4 {
+  background-color: #FFA400;
+  color: var(--color-primary-2);
+}
+
+ul.card-list__cuentas li#cuenta-6 {
+  background-color: var(--color-black);
+}
+
 ul.card-list__cuentas li span.icon-wrapper {
   width: 45px;
   height: 45px;
@@ -175,6 +193,7 @@ ul.card-list__cuentas li span.icon-wrapper {
 
 ul.card-list__cuentas a {
   text-decoration: none;
+  margin: 10px 0;
 }
 
 ul.card-list__cuentas li.small-card__cuentas .small-card__content {
@@ -268,6 +287,10 @@ ul.card-list__cuentas li span.small-card__saldo {
 
   ul.card-list__cuentas li.small-card__cuentas {
     margin-right: 0;
+  }
+
+  ul.card-list__cuentas a {
+    margin: 0;
   }
 
   .group_categoria-comentario, 

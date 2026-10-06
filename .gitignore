@@ -1,1 +1,10 @@
 .env
+.env.*
+!.env.example
+.DS_Store
+node_modules/
+dist/
+.netlify/
+app/backups/*
+*.sql.gz
+*.sql.zip

@@ -11,13 +11,22 @@ class UsuariosController {
   public function login() {
     $usuario = trim($_POST['usuario'] ?? '');
     $password = $_POST['password'] ?? '';
-    $usuario = (new UsuariosModel())->login($usuario);
+    if ($usuario === '' || $password === '') {
+      header('Location: index.php?c=usuarios&a=index&error=login');
+      exit;
+    }
+    $user = (new UsuariosModel())->login($usuario, $password);
+    if (!$user) {
+      header('Location: index.php?c=usuarios&a=index&error=login');
+      exit;
+    }
 
-    $_SESSION['user_id']    = $usuario['id'];
-    $_SESSION['user_name']  = ($usuario['usuario'] ?? '');
-    $_SESSION['user_email'] = ($usuario['email'] ?? '');
-    
+    $_SESSION['user_id']    = $user['id'];
+    $_SESSION['user_name']  = ($user['usuario'] ?? '');
+    $_SESSION['user_email'] = ($user['email'] ?? '');
+
     header('Location: index.php?c=movimientos&a=resumen');
+    exit;
   }
 
   // Método para mostrar el formulario de registro.
@@ -43,11 +52,13 @@ class UsuariosController {
     $_SESSION['user_email'] = $email;
 
     header('Location: index.php?c=movimientos&a=resumen');
+    exit;
   }
 
   // Método para cerrar sesión. 
   public function logout() {
     session_destroy();
     header('Location: index.php?c=usuarios&a=index');
+    exit;
   }
 }

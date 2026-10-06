@@ -1,10 +1,22 @@
 class CardList extends HTMLElement {
+  static get observedAttributes() {
+    return ['data-url'];
+  }
+
+  async load() {
+    const url = this.getAttribute('data-url');
+    if (!url) return;
+
+    const res = await fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+    this.innerHTML = await res.text();
+
+    // Al recargar, vacía selección
+    this.dispatchEvent(new CustomEvent('selection-change', { detail: { ids: [] } }));
+  }
+
   async connectedCallback() {
-    const url = this.dataset.url;
-    if (url) {
-      const res = await fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
-      this.innerHTML = await res.text();
-    }
+    await this.load();
+
     this.addEventListener('click', (e) => {
 
       const checkbox = e.target.closest('.select-movimiento');
@@ -20,6 +32,12 @@ class CardList extends HTMLElement {
       const ids = Array.from(this.querySelectorAll('.select-movimiento:checked')).map(checked => checked.dataset.id);
       this.dispatchEvent(new CustomEvent('selection-change', { detail: { ids } }));
     });
+  }
+
+  async attributeChangedCallback(name, oldValue, newValue) {
+    if (name === 'data-url' && oldValue !== newValue && this.isConnected) {
+      await this.load();
+    }
   }
   getSelectedIds() {
     return Array.from(this.querySelectorAll('.select-movimiento:checked')).map(checked => checked.dataset.id);

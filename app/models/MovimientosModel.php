@@ -20,18 +20,95 @@ class MovimientosModel {
 
 	public function getAllMovimientosByUser($userId)
 	{
+		return $this->getMovimientosByUserFiltered((int)$userId, []);
+	}
+
+	private function bindDynamicParams(mysqli_stmt $stmt, string $types, array $values): void
+	{
+		// mysqli requiere referencias en bind_param
+		$refs = [];
+		foreach ($values as $k => $v) {
+			$refs[$k] = &$values[$k];
+		}
+		array_unshift($refs, $types);
+		call_user_func_array([$stmt, 'bind_param'], $refs);
+	}
+
+	/**
+	 * Filtros soportados:
+	 * - mes (YYYY-MM)
+	 * - cuenta_id (int)
+	 * - categoria_id (int)
+	 * - tipo_movimiento ('Ingreso'|'Gasto'|'Transferencia')
+	 * - tipo_registro ('Fijo'|'Variable')
+	 * - q (string, busca en comentario/categoría/cuenta)
+	 */
+	public function getMovimientosByUserFiltered(int $userId, array $filters): array
+	{
 		$sql = "SELECT m.*, c.nombre AS categoria_nombre, a.nombre AS cuenta_nombre
 		FROM movimientos m
 		LEFT JOIN categorias c ON c.id = m.categoria_id
 		LEFT JOIN cuentas a    ON a.id = m.cuenta_id
-		WHERE m.usuario_id = ?
-		ORDER BY m.fecha_registro DESC, m.id DESC";
+		WHERE m.usuario_id = ?";
+
+		$types = 'i';
+		$params = [$userId];
+
+		if (!empty($filters['cuenta_id'])) {
+			$sql .= " AND m.cuenta_id = ?";
+			$types .= 'i';
+			$params[] = (int)$filters['cuenta_id'];
+		}
+
+		if (!empty($filters['categoria_id'])) {
+			$sql .= " AND m.categoria_id = ?";
+			$types .= 'i';
+			$params[] = (int)$filters['categoria_id'];
+		}
+
+		if (!empty($filters['tipo_movimiento'])) {
+			$sql .= " AND m.tipo_movimiento = ?";
+			$types .= 's';
+			$params[] = (string)$filters['tipo_movimiento'];
+		}
+
+		if (!empty($filters['tipo_registro'])) {
+			$sql .= " AND m.tipo_registro = ?";
+			$types .= 's';
+			$params[] = (string)$filters['tipo_registro'];
+		}
+
+		if (!empty($filters['mes'])) {
+			$mes = (string)$filters['mes'];
+			// Espera YYYY-MM
+			if (preg_match('/^\d{4}-\d{2}$/', $mes)) {
+				$start = $mes . '-01 00:00:00';
+				$end = date('Y-m-d H:i:s', strtotime($mes . '-01 +1 month'));
+				$sql .= " AND m.fecha_registro >= ? AND m.fecha_registro < ?";
+				$types .= 'ss';
+				$params[] = $start;
+				$params[] = $end;
+			}
+		}
+
+		if (!empty($filters['q'])) {
+			$q = trim((string)$filters['q']);
+			if ($q !== '') {
+				$like = '%' . $q . '%';
+				$sql .= " AND (m.comentario LIKE ? OR c.nombre LIKE ? OR a.nombre LIKE ?)";
+				$types .= 'sss';
+				$params[] = $like;
+				$params[] = $like;
+				$params[] = $like;
+			}
+		}
+
+		$sql .= " ORDER BY m.fecha_registro DESC, m.id DESC";
 
 		$stmt = $this->db->prepare($sql);
-		$stmt->bind_param('i', $userId);
+		$this->bindDynamicParams($stmt, $types, $params);
 		$stmt->execute();
 		$res = $stmt->get_result();
-		
 		return $res ? $res->fetch_all(MYSQLI_ASSOC) : [];
 	}
 

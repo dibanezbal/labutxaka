@@ -73,6 +73,50 @@
     margin-top: 50px;
 }
 
+.movimientos-filters {
+  margin-top: 10px;
+}
+
+.movimientos-filters__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+  padding: 12px 0;
+}
+
+.movimientos-filters__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 140px;
+}
+
+.movimientos-filters__field--grow {
+  flex: 1;
+  min-width: 220px;
+}
+
+.movimientos-filters__field label {
+  font-size: var(--font-size-sm);
+  color: var(--color-primary-2);
+  font-weight: var(--font-weight-bold);
+}
+
+.movimientos-filters__field input,
+.movimientos-filters__field select {
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.12);
+  padding: 6px 10px;
+  background: var(--color-white);
+}
+
+.movimientos-filters__actions {
+  display: flex;
+  align-items: flex-end;
+}
+
 .card-list__cuentas-wrapper {
     margin: 55px 0;
 }

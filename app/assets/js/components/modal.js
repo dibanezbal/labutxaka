@@ -160,3 +160,88 @@ selectAll?.addEventListener('change', (e) => {
   
   cardList?.dispatchEvent(new CustomEvent('selection-change', { detail: { ids: allSelectedIds } }));
 });
+
+// FILTROS: Movimientos (mes/cuenta/categoría/tipo/búsqueda)
+const filterMes = document.getElementById('filter-mes');
+const filterCuenta = document.getElementById('filter-cuenta');
+const filterCategoria = document.getElementById('filter-categoria');
+const filterTipoMov = document.getElementById('filter-tipo-mov');
+const filterTipoReg = document.getElementById('filter-tipo-reg');
+const filterQ = document.getElementById('filter-q');
+const filterReset = document.getElementById('filter-reset');
+
+function buildListUrlFromFilters() {
+  const params = new URLSearchParams();
+  params.set('c', 'movimientos');
+  params.set('a', 'listaMovimientos');
+
+  const mes = (filterMes?.value || '').trim();
+  const cuenta = (filterCuenta?.value || '').trim();
+  const categoria = (filterCategoria?.value || '').trim();
+  const tipoMov = (filterTipoMov?.value || '').trim();
+  const tipoReg = (filterTipoReg?.value || '').trim();
+  const q = (filterQ?.value || '').trim();
+
+  if (mes) params.set('mes', mes);
+  if (cuenta) params.set('cuenta_id', cuenta);
+  if (categoria) params.set('categoria_id', categoria);
+  if (tipoMov) params.set('tipo_movimiento', tipoMov);
+  if (tipoReg) params.set('tipo_registro', tipoReg);
+  if (q) params.set('q', q);
+
+  return `?${params.toString()}`;
+}
+
+function syncPageUrl() {
+  const url = new URL(window.location.href);
+  url.searchParams.set('c', 'movimientos');
+  url.searchParams.set('a', 'index');
+
+  // Limpia params de filtros y reañade desde UI
+  ['mes','cuenta_id','categoria_id','tipo_movimiento','tipo_registro','q'].forEach(k => url.searchParams.delete(k));
+
+  const mes = (filterMes?.value || '').trim();
+  const cuenta = (filterCuenta?.value || '').trim();
+  const categoria = (filterCategoria?.value || '').trim();
+  const tipoMov = (filterTipoMov?.value || '').trim();
+  const tipoReg = (filterTipoReg?.value || '').trim();
+  const q = (filterQ?.value || '').trim();
+
+  if (mes) url.searchParams.set('mes', mes);
+  if (cuenta) url.searchParams.set('cuenta_id', cuenta);
+  if (categoria) url.searchParams.set('categoria_id', categoria);
+  if (tipoMov) url.searchParams.set('tipo_movimiento', tipoMov);
+  if (tipoReg) url.searchParams.set('tipo_registro', tipoReg);
+  if (q) url.searchParams.set('q', q);
+
+  window.history.replaceState({}, '', url.toString());
+}
+
+function applyFilters() {
+  if (!cardList) return;
+  cardList.setAttribute('data-url', buildListUrlFromFilters());
+  syncPageUrl();
+}
+
+let qTimer;
+function applyFiltersDebounced() {
+  clearTimeout(qTimer);
+  qTimer = setTimeout(applyFilters, 250);
+}
+
+filterMes?.addEventListener('change', applyFilters);
+filterCuenta?.addEventListener('change', applyFilters);
+filterCategoria?.addEventListener('change', applyFilters);
+filterTipoMov?.addEventListener('change', applyFilters);
+filterTipoReg?.addEventListener('change', applyFilters);
+filterQ?.addEventListener('input', applyFiltersDebounced);
+
+filterReset?.addEventListener('click', () => {
+  if (filterMes) filterMes.value = '';
+  if (filterCuenta) filterCuenta.value = '';
+  if (filterCategoria) filterCategoria.value = '';
+  if (filterTipoMov) filterTipoMov.value = '';
+  if (filterTipoReg) filterTipoReg.value = '';
+  if (filterQ) filterQ.value = '';
+  applyFilters();
+});
